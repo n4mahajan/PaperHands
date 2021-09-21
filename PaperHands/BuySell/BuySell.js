@@ -6,32 +6,29 @@
 //  Copyright © 2018 [Company]. All rights reserved.
 //
 
-import React from "react"
-import { Image, StyleSheet, Text, View } from "react-native"
+import React,{useState,useContext} from "react"
+import { Image, StyleSheet, Text, View,Button} from "react-native"
+import { AuthContext } from "../../context/AuthProvider"
+import firebase from "firebase"
 
 
-export default class BuySell extends React.Component {
+export default function BuySell () {
 
-	static navigationOptions = ({ navigation }) => {
 	
-		const { params = {} } = navigation.state
-		return {
-				header: null,
-				headerLeft: null,
-				headerRight: null,
-			}
-	}
 
-	constructor(props) {
-		super(props)
-	}
-
-	componentDidMount() {
+	const {user}=useContext(AuthContext)
 	
-	}
-
-	render() {
 	
-		return <View><Text>Buy/Sell Page</Text></View>
-	}
+	return (
+	<View>
+		<Text>Hello user {user.name}</Text>
+		<Text>Your balance is {user.balance}</Text>
+		<Text>Buy/Sell Page</Text>
+		<Button title="sign out" onPress={()=>{
+			
+			firebase.auth().signOut()
+		}}/>
+	</View>
+	)
+	
 }

@@ -16,40 +16,16 @@ import Welcome from "./PaperHands/Welcome/Welcome"
 import SignUp from "./PaperHands/SignUp/SignUp"
 import React from "react"
 import { AppLoading, DangerZone } from "expo"
-import { createAppContainer, createStackNavigator } from "react-navigation"
+import AuthProvider from "./context/AuthProvider"
+import Navigation from "./navigation/Navigation"
+import ContextWrapper from "./components/ContextWrapper"
 
-const PushRouteOne = createStackNavigator({
-	SignUp: {
-		screen: SignUp,
-	},
-}, {
-	initialRouteName: "SignUp",
-})
 
-const RootNavigator = createStackNavigator({
-	PushRouteOne: {
-		screen: PushRouteOne,
-	},
-}, {
-	mode: "modal",
-	headerMode: "none",
-	initialRouteName: "PushRouteOne",
-})
 
-const AppContainer = createAppContainer(RootNavigator)
-
-export default class App extends React.Component {
-
-	constructor(props) {
-		super(props)
-		this.state = {
-		}
-	}
-
-	componentDidMount() {
-	}
-
-	render() {
-		return <AppContainer/>
-	}
+export default function App (){
+		return(
+			<ContextWrapper>
+				<Navigation/>
+			</ContextWrapper>
+		) 
 }

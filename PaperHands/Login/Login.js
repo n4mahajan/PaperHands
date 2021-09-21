@@ -6,33 +6,24 @@
 //  Copyright © 2018 [Company]. All rights reserved.
 //
 
-import React from "react"
-import { Image, StyleSheet, Text, View } from "react-native"
+import React,{useState} from "react"
+import { Image, StyleSheet, Text, TextInput, View,Button } from "react-native"
+import firebase from "firebase"
 
 
-export default class Login extends React.Component {
+export default function Login ({navigation}) {
+	const [username,setUsername]=useState(null)
+	const [password,setPassword]=useState(null)
 
-	static navigationOptions = ({ navigation }) => {
-	
-		const { params = {} } = navigation.state
-		return {
-				header: null,
-				headerLeft: null,
-				headerRight: null,
-			}
+	const login=()=>{
+		firebase.auth().signInWithEmailAndPassword(username+'@gmail.com',password).then(()=>{
+			console.log('here')
+		})
 	}
 
-	constructor(props) {
-		super(props)
-	}
-
-	componentDidMount() {
 	
-	}
-
-	render() {
-	
-		return <View
+		return (
+			<View
 				style={styles.loginView}>
 				<View
 					pointerEvents="box-none"
@@ -64,37 +55,19 @@ export default class Login extends React.Component {
 						style={styles.theFutureOfTradingText}>The future of trading</Text>
 					<Text
 						style={styles.welcomeText}>Welcome!</Text>
-					<Text
-						style={styles.eMailText}>E-mail</Text>
-					<Text
-						style={styles.passwordText}>Password</Text>
-					<View
-						style={{
-							flex: 1,
-						}}/>
-					<Text
-						style={styles.loginText}>LOGIN</Text>
-					<View
-						pointerEvents="box-none"
-						style={{
-							alignSelf: "stretch",
-							height: 34,
-							marginRight: 2,
-							flexDirection: "row",
-							alignItems: "flex-end",
-						}}>
-						<Text
-							style={styles.forgotPasswordText}>Forgot Password?</Text>
-						<View
-							style={{
-								flex: 1,
-							}}/>
-						<Text
-							style={styles.signUpText}>Sign Up</Text>
-					</View>
+					
+						
+					<TextInput placeholder="username" onChangeText={setUsername}/>
+					<TextInput placeholder="password" onChangeText={setPassword}/>
+					<Button title="login" onPress={login}/>
+					<Button title="signup" onPress={()=>{
+						navigation.push("SignUp")
+					}
+					}/>
 				</View>
 			</View>
-	}
+		)
+	
 }
 
 const styles = StyleSheet.create({

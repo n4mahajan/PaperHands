@@ -6,33 +6,36 @@
 //  Copyright © 2018 [Company]. All rights reserved.
 //
 
-import React from "react"
-import { Image, StyleSheet, Text, View } from "react-native"
+import React,{useState,useContext} from "react"
+import { Image, StyleSheet, Text, TextInput, View,Button } from "react-native"
+import firebase from "firebase"
+import { AuthContext } from "../../context/AuthProvider"
 
 
-export default class SignUp extends React.Component {
+export default function SignUp(){
+	const [username,setUsername]=useState(null)
+	const [password,setPassword]=useState(null)
+	const [name,setName]=useState(null)
+	const [balance,setBalance]=useState(100000)
 
-	static navigationOptions = ({ navigation }) => {
+	const {user}=useContext(AuthContext) 
+
+	const createUser=async()=>{
+		let newUser=await firebase.auth().createUserWithEmailAndPassword(username+'@gmail.com',password)
+		firebase.firestore().collection('Users').doc(newUser.user.uid).set({
+				name,
+				balance
+		})
+			
+		
+	} 
+
 	
-		const { params = {} } = navigation.state
-		return {
-				header: null,
-				headerLeft: null,
-				headerRight: null,
-			}
-	}
 
-	constructor(props) {
-		super(props)
-	}
-
-	componentDidMount() {
 	
-	}
-
-	render() {
 	
-		return <View
+		return (
+			<View
 				style={styles.signUpView}>
 				<View
 					pointerEvents="box-none"
@@ -62,18 +65,11 @@ export default class SignUp extends React.Component {
 						style={styles.paperhandsText}>PaperHands</Text>
 					<Text
 						style={styles.theFutureOfTradingText}>The future of trading</Text>
-					<Text
-						style={styles.createAFreeAccounText}>Create a free account</Text>
-					<Text
-						style={styles.eMailText}>E-mail</Text>
-					<Text
-						style={styles.passwordText}>Password</Text>
 					<View
 						style={{
 							flex: 1,
 						}}/>
-					<Text
-						style={styles.signUpText}>SIGN UP</Text>
+				
 					<View
 						pointerEvents="box-none"
 						style={{
@@ -82,18 +78,23 @@ export default class SignUp extends React.Component {
 							flexDirection: "row",
 							alignItems: "flex-end",
 						}}>
-						<Text
-							style={styles.forgotPasswordText}>Forgot Password?</Text>
+					
+						
 						<View
 							style={{
 								flex: 1,
 							}}/>
-						<Text
-							style={styles.loginText}>Login</Text>
 					</View>
+					
 				</View>
+				<TextInput placeholder="username" onChangeText={setUsername}/>
+				<TextInput placeholder="password" onChangeText={setPassword}/>
+				<TextInput placeholder="name" onChangeText={setName}/>
+				<Button title="create User with a starting balance of 100,000" onPress={createUser}/>
+
 			</View>
-	}
+		)
+	
 }
 
 const styles = StyleSheet.create({
