@@ -23,7 +23,7 @@ const AuthProvider = ({children}) => {
         });
 
       }else{
-          console.log('null here')
+          setUser(null)
       }
     });
   }, []);
