@@ -15,19 +15,10 @@ import firebase from "firebase"
 export default function BuySell () {
 
 	
-
-	const {user}=useContext(AuthContext)
-	
 	
 	return (
 	<View>
-		<Text>Hello user {user.name}</Text>
-		<Text>Your balance is {user.balance}</Text>
 		<Text>Buy/Sell Page</Text>
-		<Button title="sign out" onPress={()=>{
-			
-			firebase.auth().signOut()
-		}}/>
 	</View>
 	)
 	

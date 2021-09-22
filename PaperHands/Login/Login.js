@@ -64,6 +64,9 @@ export default function Login ({navigation}) {
 						navigation.push("SignUp")
 					}
 					}/>
+					<Button title="Quick Login Kiran" onPress={()=>{
+						firebase.auth().signInWithEmailAndPassword('kiran@gmail.com','Testing')
+					}}/>
 				</View>
 			</View>
 		)
