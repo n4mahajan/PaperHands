@@ -18,13 +18,13 @@ export default function News (){
 
 	useEffect(()=>{
 		async function fetchData() {
-		  const response = await axios.get(
-			"https://finnhub.io/api/v1/news?category=general&token=btnth1n48v6p0j27i8k0"
-		  );
-		const results= await response.data
-		const shorten=results.slice(0,20)
-		setArticles(shorten)
-		setLoading(false)
+			const response = await axios.get(
+				"https://finnhub.io/api/v1/news?category=general&token=btnth1n48v6p0j27i8k0"
+			);
+			const results = await response.data
+			const shorten = results.slice(0,20)
+			setArticles(shorten)
+			setLoading(false)
 		}
 		
 		fetchData()

@@ -6,247 +6,49 @@
 //  Copyright © 2018 [Company]. All rights reserved.
 //
 
-import React from "react"
-import { Image, StyleSheet, Text, View } from "react-native"
+import React, {useContext, useEffect, useState} from "react"
+import { Image, StyleSheet, Text, View, FlatList, ScrollView} from "react-native"
+import axios from 'axios'
+import CompanyRowItem from "../Home/CompanyRowItem"
 
+export default function Home() {
+	const [search, setSearch] = useState('')
+	const [results, setResults] = useState(null)
 
-export default class Home extends React.Component {
+	useEffect(() => {
 
-	static navigationOptions = ({ navigation }) => {
-	
-		const { params = {} } = navigation.state
-		return {
-				header: null,
-				headerLeft: null,
-				headerRight: null,
-			}
-	}
+		async function fetchData() {
+			const response = await axios.get(`https://finnhub.io/api/v1/stock/symbol?exchange=US&token=btnth1n48v6p0j27i8k0`)
+			const companies = await response.data
+			// Initially sort companies in ascending order by their symbol
+			companies.sort(function(a, b){
+				if (a.symbol < b.symbol)
+					return -1
+				return 1
+			})
+			console.log(companies)
+			setResults(companies)
+		}
+		fetchData()
+		
+	}, [])
 
-	constructor(props) {
-		super(props)
-	}
-
-	componentDidMount() {
-	
-	}
-
-	render() {
-	
-		return <View
-				style={styles.homeView}>
-				<View
-					pointerEvents="box-none"
-					style={{
-						position: "absolute",
-						left: 0,
-						right: -7,
-						top: 0,
-						bottom: 0,
-					}}>
-					<View
-						pointerEvents="box-none"
-						style={{
-							position: "absolute",
-							left: 0,
-							right: 0,
-							top: 0,
-							bottom: 0,
-							justifyContent: "center",
-						}}>
-						<Image
-							source={require("./../../assets/images/rectangle-4.png")}
-							style={styles.rectangleImage}/>
-					</View>
-					<View
-						pointerEvents="box-none"
-						style={{
-							position: "absolute",
-							left: 21,
-							right: 111,
-							top: 45,
-							bottom: 108,
-							alignItems: "flex-start",
-						}}>
-						<Text
-							style={styles.settingsText}>SETTINGS</Text>
-						<Text
-							style={styles.financesText}>Finances</Text>
-						<Text
-							style={styles.currentFunds1293Text}>Current Funds: $1293.50</Text>
-						<Text
-							style={styles.addFundsText}>Add Funds:</Text>
-						<Text
-							style={styles.addText}>Add</Text>
-						<Text
-							style={styles.accountText}>Account</Text>
-						<Text
-							style={styles.changeUsernameText}>Change Username</Text>
-						<Text
-							style={styles.changePasswordText}>Change Password</Text>
-						<View
-							style={{
-								flex: 1,
-							}}/>
-						<Text
-							style={styles.accessibilityText}>Accessibility</Text>
-						<Text
-							style={styles.darkModeText}>Dark Mode</Text>
-						<View
-							pointerEvents="box-none"
-							style={{
-								alignSelf: "stretch",
-								height: 19,
-								flexDirection: "row",
-								alignItems: "flex-end",
-							}}>
-							<Text
-								style={styles.fontSizeText}>Font Size:</Text>
-							<View
-								style={{
-									flex: 1,
-								}}/>
-							<Text
-								style={styles.mediumText}>Medium</Text>
-						</View>
-					</View>
-				</View>
-				<Text
-					style={styles.lightModeText}>Light Mode</Text>
-			</View>
-	}
-}
+	return (
+		<View style={styles.container}>
+			<FlatList data={results} keyExtractor={(item) => item.figi} style={styles.rowItem} renderItem={({item})=>(
+				<CompanyRowItem symbol={item.symbol} description={item.description} />
+			)}/>
+		</View>
+	)
+};
 
 const styles = StyleSheet.create({
-	homeView: {
-		backgroundColor: "white",
+	container: {	
 		flex: 1,
+		justifyContent: "center",
+		alignItems: "center"
 	},
-	rectangleImage: {
-		resizeMode: "cover",
-		backgroundColor: "transparent",
-		width: null,
-		height: 812,
-	},
-	settingsText: {
-		backgroundColor: "transparent",
-		color: "black",
-		fontSize: 22,
-		fontStyle: "normal",
-		fontWeight: "normal",
-		textAlign: "left",
-		marginLeft: 44,
-	},
-	financesText: {
-		backgroundColor: "transparent",
-		color: "black",
-		fontSize: 16,
-		fontStyle: "normal",
-		fontWeight: "normal",
-		textAlign: "left",
-		marginLeft: 35,
-		marginTop: 68,
-	},
-	currentFunds1293Text: {
-		backgroundColor: "transparent",
-		color: "black",
-		fontSize: 16,
-		fontStyle: "normal",
-		fontWeight: "normal",
-		textAlign: "left",
-		marginTop: 55,
-	},
-	addFundsText: {
-		backgroundColor: "transparent",
-		color: "black",
-		fontSize: 16,
-		fontStyle: "normal",
-		fontWeight: "normal",
-		textAlign: "left",
-		marginTop: 50,
-	},
-	addText: {
-		color: "white",
-		fontSize: 16,
-		fontStyle: "normal",
-		fontWeight: "normal",
-		textAlign: "left",
-		backgroundColor: "transparent",
-		alignSelf: "flex-end",
-		marginRight: 21,
-		marginTop: 33,
-	},
-	accountText: {
-		backgroundColor: "transparent",
-		color: "black",
-		fontSize: 16,
-		fontStyle: "normal",
-		fontWeight: "normal",
-		textAlign: "left",
-		marginLeft: 35,
-		marginTop: 68,
-	},
-	changeUsernameText: {
-		backgroundColor: "transparent",
-		color: "black",
-		fontSize: 16,
-		fontStyle: "normal",
-		fontWeight: "normal",
-		textAlign: "left",
-		marginTop: 40,
-	},
-	changePasswordText: {
-		backgroundColor: "transparent",
-		color: "black",
-		fontSize: 16,
-		fontStyle: "normal",
-		fontWeight: "normal",
-		textAlign: "left",
-		marginTop: 25,
-	},
-	accessibilityText: {
-		backgroundColor: "transparent",
-		color: "black",
-		fontSize: 16,
-		fontStyle: "normal",
-		fontWeight: "normal",
-		textAlign: "left",
-		marginLeft: 24,
-		marginBottom: 22,
-	},
-	darkModeText: {
-		color: "black",
-		fontSize: 16,
-		fontStyle: "normal",
-		fontWeight: "normal",
-		textAlign: "left",
-		backgroundColor: "transparent",
-		marginBottom: 19,
-	},
-	fontSizeText: {
-		color: "black",
-		fontSize: 16,
-		fontStyle: "normal",
-		fontWeight: "normal",
-		textAlign: "left",
-		backgroundColor: "transparent",
-	},
-	mediumText: {
-		backgroundColor: "transparent",
-		color: "black",
-		fontSize: 16,
-		fontStyle: "normal",
-		fontWeight: "normal",
-		textAlign: "left",
-	},
-	lightModeText: {
-		backgroundColor: "transparent",
-		color: "black",
-		fontSize: 16,
-		fontStyle: "normal",
-		fontWeight: "normal",
-		textAlign: "left",
-		position: "absolute",
-		alignSelf: "center",
-		bottom: 146,
-	},
+	rowItem: {
+		width: "100%"
+	}
 })

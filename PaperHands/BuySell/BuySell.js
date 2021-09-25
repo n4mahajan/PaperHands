@@ -11,10 +11,9 @@ import { Image, StyleSheet, Text, View,Button} from "react-native"
 import { AuthContext } from "../../context/AuthProvider"
 import firebase from "firebase"
 
-
-export default function BuySell () {
-
-	
+// If more info about company is needed, use https://finnhub.io/docs/api/company-profile and make an API call using company symbol
+export default function BuySell (props) {	
+	const {} = props;
 	
 	return (
 	<View>

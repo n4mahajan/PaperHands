@@ -23,9 +23,9 @@ import ContextWrapper from "./components/ContextWrapper"
 
 
 export default function App (){
-		return(
-			<ContextWrapper>
-				<Navigation/>
-			</ContextWrapper>
-		) 
+	return(
+		<ContextWrapper>
+			<Navigation/>
+		</ContextWrapper>
+	) 
 }
