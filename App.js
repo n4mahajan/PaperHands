@@ -19,6 +19,7 @@ import { AppLoading, DangerZone } from "expo"
 import AuthProvider from "./context/AuthProvider"
 import Navigation from "./navigation/Navigation"
 import ContextWrapper from "./components/ContextWrapper"
+import {Text} from "react-native"
 
 
 

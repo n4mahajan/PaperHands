@@ -11,7 +11,7 @@ const AuthProvider = ({children}) => {
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(async firebaseUser => {
-      console.log('In fireabse auth state change');
+      console.log('In firebase auth state change');
       if (firebaseUser) {
         let docRef = firebase
           .firestore()
