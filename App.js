@@ -24,9 +24,9 @@ import {Text} from "react-native"
 
 
 export default function App (){
-		return(
-			<ContextWrapper>
-				<Navigation/>
-			</ContextWrapper>
-		) 
+	return(
+		<ContextWrapper>
+			<Navigation/>
+		</ContextWrapper>
+	) 
 }
