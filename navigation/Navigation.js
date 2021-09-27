@@ -33,7 +33,10 @@ const HomeStack=createStackNavigator()
 
 const home = ({navigation}) => {
   return (
-    <HomeStack.Navigator>
+    <HomeStack.Navigator
+    screenOptions={{
+      headerShown: false,
+    }}>
       <HomeStack.Screen
         name="Inner Home"
         component={Home}
