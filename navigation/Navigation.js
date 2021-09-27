@@ -27,6 +27,7 @@ import selectedPortfolioIcon from "../assets/images/selectedPortfolioIcon.png"
 import selectedNewsIcon from "../assets/images/selectedNewsIcon.png"
 import selectedProfileIcon from "../assets/images/selectedProfileIcon.png"
 
+
 const LoginStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const HomeStack=createStackNavigator()
@@ -40,6 +41,10 @@ const home = ({navigation}) => {
       <HomeStack.Screen
         name="Inner Home"
         component={Home}
+      />
+      <HomeStack.Screen
+        name="BuySell"
+        component={BuySell}
       />
     </HomeStack.Navigator>
   );

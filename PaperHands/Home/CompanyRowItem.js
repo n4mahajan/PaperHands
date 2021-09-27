@@ -7,7 +7,7 @@ export default function CompanyRowItem(props) {
     // TODO: implement on click event for when company is clicked
     // to navigate to their buy/sell page
     function companyRowItemOnClick() {
-        alert(description);
+        props.navigation.push("BuySell")
     }
 
     // Likely need to make another API call to get the stock amounts for the given company
