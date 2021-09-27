@@ -29,6 +29,18 @@ import selectedProfileIcon from "../assets/images/selectedProfileIcon.png"
 
 const LoginStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+const HomeStack=createStackNavigator()
+
+const home = ({navigation}) => {
+  return (
+    <HomeStack.Navigator>
+      <HomeStack.Screen
+        name="Inner Home"
+        component={Home}
+      />
+    </HomeStack.Navigator>
+  );
+};
 
 
 export default function Navigation({navigation}) {
@@ -57,7 +69,7 @@ export default function Navigation({navigation}) {
               <Tab.Navigator>
                 <Tab.Screen
                   name="Home"
-                  component={Home}
+                  component={home}
                   options={{
                     tabBarIcon: ({focused}) => {
                       if (!focused) {
