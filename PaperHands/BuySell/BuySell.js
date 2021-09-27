@@ -15,7 +15,7 @@ import { useEffect } from "react/cjs/react.development";
 import axios from "axios";
 import Chart from "./Chart"
 
-export default function BuySell () {
+export default function BuySell ({navigation, route}) {
 	const [price, setPrice] = useState(0)
 	const [amount, setAmount] = useState()
 	const [yAxis, setYAxis] = useState()
@@ -31,6 +31,7 @@ export default function BuySell () {
 	const finnhubClient = new finnhub.DefaultApi()
 	useEffect(()=>{
 		async function fetchData() {
+			setSymbol(route.params.symbol)
 			const pricing = await axios.get(`https://finnhub.io/api/v1/stock/candle?token=btnth1n48v6p0j27i8k0&symbol=${symbol}&resolution=D&from=1590988249&to=1591852249`)
 			const info = pricing.data
 			console.log(info)
