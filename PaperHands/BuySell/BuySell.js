@@ -29,6 +29,7 @@ export default function BuySell () {
 	const api_key = finnhub.ApiClient.instance.authentications['api_key'];
 	api_key.apiKey = "btnth1n48v6p0j27i8k0"
 	const finnhubClient = new finnhub.DefaultApi()
+	
 	useEffect(()=>{
 		async function fetchData() {
 			const pricing = await axios.get(`https://finnhub.io/api/v1/stock/candle?token=btnth1n48v6p0j27i8k0&symbol=${symbol}&resolution=D&from=1590988249&to=1591852249`)

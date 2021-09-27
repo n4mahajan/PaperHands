@@ -11,7 +11,7 @@ import { Image, StyleSheet, Text, View, FlatList, ScrollView} from "react-native
 import axios from 'axios'
 import CompanyRowItem from "../Home/CompanyRowItem"
 
-export default function Home() {
+export default function Home({navigation}) {
 	const [search, setSearch] = useState('')
 	const [results, setResults] = useState(null)
 
@@ -36,7 +36,7 @@ export default function Home() {
 	return (
 		<View style={styles.container}>
 			<FlatList data={results} keyExtractor={(item) => item.figi} style={styles.rowItem} renderItem={({item})=>(
-				<CompanyRowItem symbol={item.symbol} description={item.description} />
+				<CompanyRowItem symbol={item.symbol} description={item.description} navigation={navigation}/>
 			)}/>
 		</View>
 	)
