@@ -24,7 +24,8 @@ export default function SignUp(){
 		let newUser=await firebase.auth().createUserWithEmailAndPassword(username+'@gmail.com',password)
 		firebase.firestore().collection('Users').doc(newUser.user.uid).set({
 				name,
-				balance
+				balance,
+				stocks:{}
 		})
 			
 		

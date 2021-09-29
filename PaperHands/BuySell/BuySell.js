@@ -20,7 +20,7 @@ export default function BuySell ({navigation, route}) {
 	const [amount, setAmount] = useState()
 	const [yAxis, setYAxis] = useState()
 	const [xAxis, setXAxis] = useState()
-	const [balance, setBalance] = useState()
+	const {user,balance,stocks}=useContext(AuthContext)
 	const [stockAmount, setStocks] = useState()
 	const [symbol, setSymbol] = useState(route.params.symbol)
 
@@ -49,6 +49,46 @@ export default function BuySell ({navigation, route}) {
 		})
 	}, [])
 
+	const buy=async()=>{
+		const numberAmount=parseInt(amount)
+		const totalCost= numberAmount*price
+		if (balance>=totalCost){
+			if(stocks.hasOwnProperty(symbol)){
+				stocks[symbol]+=numberAmount
+			}else{
+				stocks[symbol]=numberAmount
+			}
+			await firebase.firestore().collection("Users").doc(user.uid).update({
+				stocks:stocks,
+				balance:balance-totalCost
+			})
+		}
+		console.log(user)
+
+	}
+
+	const sell=async()=>{
+		const numberAmount=parseInt(amount)
+		const totalGain= numberAmount*price
+		if(stocks.hasOwnProperty(symbol)){
+			if(stocks[symbol]>numberAmount){
+				stocks[symbol]-=numberAmount
+				if (stocks[symbol]<=0){
+					delete stocks[symbol]
+				}
+				await firebase.firestore().collection("Users").doc(user.uid).update({
+					stocks:stocks,
+					balance:balance+totalGain
+				})
+			}else{
+				Alert.alert('You dont own enough of this stock')
+			}
+
+		}else{
+			Alert.alert('You dont own any shares of this stock')
+		}
+	}
+
 	return (
 	<View style = {{
 		flex: 1,
@@ -69,7 +109,7 @@ export default function BuySell ({navigation, route}) {
 			<Text>
 				Enter amount to buy/sell:	
 			</Text>
-			<TextInput placeholder="Amount" onChangeText={setAmount}/>
+			<TextInput placeholder="Amount" onChangeText={setAmount} keyboardType="numeric"/>
 		</View>
 		
 		<View style = {{
@@ -81,7 +121,7 @@ export default function BuySell ({navigation, route}) {
 		<TouchableOpacity 			
 			onPress={() => 
 			Alert.alert("Are you sure you want to buy?", "", [
-				{text: "Confirm", onPress: () => console.log("Approved Transaction")},
+				{text: "Confirm", onPress: () => buy()},
 				{text: "Deny", onPress: () => console.log("Transaction Voided")},
 			])}   >
 			<View style={styles.button}>
@@ -92,7 +132,7 @@ export default function BuySell ({navigation, route}) {
 		<TouchableOpacity 			
 			onPress={() => 
 			Alert.alert("Are you sure you want to sell?", "", [
-				{text: "Confirm", onPress: () => console.log("Approved Transaction")},
+				{text: "Confirm", onPress: () => sell()},
 				{text: "Deny", onPress: () => console.log("Transaction Voided")},
 			])}   >
 			<View style={styles.button}>
