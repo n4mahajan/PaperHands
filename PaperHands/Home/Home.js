@@ -20,7 +20,9 @@ export default function Home({navigation}) {
 
 		async function fetchData() {
 			const response = await axios.get(`https://finnhub.io/api/v1/stock/symbol?exchange=US&token=c54gglaad3ifdcrdm7u0`)
-			const companies = await response.data
+			let companies = await response.data
+			companies = companies.splice(0, 30)
+			companies = companies.filter(item => item.type === "Common Stock")
 			// Initially sort companies in ascending order by their symbol
 			companies.sort(function(a, b){
 				if (a.symbol < b.symbol)

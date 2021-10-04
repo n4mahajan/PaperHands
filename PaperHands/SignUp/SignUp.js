@@ -46,33 +46,35 @@ export default function SignUp({navigation}) {
 				pointerEvents="box-none"
 				style={{
 					position: "absolute",
-					left: 72,
-					right: 71,
-					top: 306,
-					bottom: 75,
+					left: "20%",
+					right: "20%",
+					top: "37%",
 				}}>
-				<Text
-					style={styles.paperhandsText}>PaperHands</Text>
-				<Text
-					style={styles.theFutureOfTradingText}>The future of trading</Text>
-				<Text
-					style={styles.welcomeText}>Create a Free Account</Text>
-				
-				<View style={styles.textContainer}>
-					<TextInput placeholder="Username" onChangeText={setUsername} textContentType="username" style={styles.textInput} />
-					<TextInput placeholder="Password" onChangeText={setPassword} textContentType="password" style={styles.textInput}/>
-					<TouchableHighlight onPress={createUser} style={styles.signUpButton}>
-						<Text style={styles.buttonText}>Sign Up</Text>
-					</TouchableHighlight>
-					
+				<View style={styles.titleContainer}>
+					<Text
+						style={styles.paperhandsText}>PaperHands</Text>
+					<Text
+						style={styles.theFutureOfTradingText}>The future of trading</Text>
 				</View>
-				<View style={styles.extraLinksContainer}>
-						<TouchableHighlight underlayColor="transparent">
-							<Text style={styles.extraLinksText}>Forgot Password?</Text>
+				
+				<View style={styles.signUpContainer}>
+					<Text style={styles.welcomeText}>Create a Free Account</Text>
+					<View style={styles.textContainer}>
+						<TextInput placeholder="Username" onChangeText={setUsername} textContentType="username" style={styles.textInput} />
+						<TextInput placeholder="Password" onChangeText={setPassword} textContentType="password" style={styles.textInput}/>
+						<TouchableHighlight onPress={createUser} style={styles.signUpButton}>
+							<Text style={styles.buttonText}>Sign Up</Text>
 						</TouchableHighlight>
-						<TouchableHighlight onPress={()=>{navigation.push("Login")}} underlayColor="transparent">
-							<Text style={styles.extraLinksText}>Login</Text>
-						</TouchableHighlight>
+						
+					</View>
+					<View style={styles.extraLinksContainer}>
+							<TouchableHighlight underlayColor="transparent">
+								<Text style={styles.extraLinksText}>Forgot Password?</Text>
+							</TouchableHighlight>
+							<TouchableHighlight onPress={()=>{navigation.push("Login")}} underlayColor="transparent">
+								<Text style={styles.extraLinksText}>Login</Text>
+							</TouchableHighlight>
+					</View>
 				</View>
 			</View>
 		</View>
@@ -164,5 +166,11 @@ const styles = StyleSheet.create({
 		fontStyle: "normal",
 		fontWeight: "normal",
 		backgroundColor: "transparent",
+	}, 
+	titleContainer: {
+		top: "15%"
+	},
+	signUpContainer: {
+		top: "12%"
 	}
 })
