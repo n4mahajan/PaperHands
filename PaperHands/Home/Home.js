@@ -14,11 +14,12 @@ import CompanyRowItem from "../Home/CompanyRowItem"
 export default function Home({navigation}) {
 	const [search, setSearch] = useState('')
 	const [results, setResults] = useState(null)
+	const [loading,setLoading]=useState(true)
 
-	useEffect(() => {
+	useEffect(async() => {
 
 		async function fetchData() {
-			const response = await axios.get(`https://finnhub.io/api/v1/stock/symbol?exchange=US&token=btnth1n48v6p0j27i8k0`)
+			const response = await axios.get(`https://finnhub.io/api/v1/stock/symbol?exchange=US&token=c54gglaad3ifdcrdm7u0`)
 			const companies = await response.data
 			// Initially sort companies in ascending order by their symbol
 			companies.sort(function(a, b){
@@ -28,11 +29,12 @@ export default function Home({navigation}) {
 			})
 			setResults(companies)
 		}
-		fetchData()
+		await fetchData()
+		setLoading(false)
 		
 	}, [])
 
-	if (results === null) {
+	if (loading==true) {
 		return (
 			<View style={styles.loadingIcon}>
 				<ActivityIndicator size="large" color="black"/>

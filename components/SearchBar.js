@@ -15,7 +15,7 @@ const SearchBar=()=>{
 				const results = await response.data
 				console.log(results.result)
 				setResults(results.result.slice(0, 5))
-			} else{
+			}else{
 				setResults([])
 			}
 		}
