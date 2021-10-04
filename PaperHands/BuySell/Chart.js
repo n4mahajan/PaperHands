@@ -53,7 +53,6 @@ const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
         <ChartPathProvider data={{ points:data, smoothingStrategy: 'bezier' }}>
         <View>
             <Text>
-                Chart WIP
                 {symbol}
             </Text>
         </View>
