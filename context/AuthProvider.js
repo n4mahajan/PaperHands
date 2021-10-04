@@ -6,7 +6,9 @@ import {Text, View} from 'react-native';
 const AuthContext = createContext();
 
 const AuthProvider = ({children}) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState();
+  const [balance,setBalance]=useState(null)
+  const [stocks,setStocks]=useState(null)
 
 
   useEffect(() => {
@@ -19,8 +21,29 @@ const AuthProvider = ({children}) => {
           .doc(firebaseUser.uid);
 
         docRef.get().then(async doc => {
-            setUser(doc.data())
+            setUser({
+              name:doc.data().name,
+              uid:firebaseUser.uid
+            })
         });
+
+      firebase
+      .firestore()
+      .collection('Users')
+      .doc(firebaseUser.uid)
+      .onSnapshot(documentSnapshot => {
+        const b = documentSnapshot.data().balance;
+        setBalance(b);
+      });
+
+      firebase
+      .firestore()
+      .collection('Users')
+      .doc(firebaseUser.uid)
+      .onSnapshot(documentSnapshot => {
+        const b = documentSnapshot.data().stocks;
+        setStocks(b);
+      });
 
       }else{
           setUser(null)
@@ -33,6 +56,8 @@ const AuthProvider = ({children}) => {
       value={{
         user,
         setUser,
+        balance,
+        stocks
       }}>
       {children}
     </AuthContext.Provider>

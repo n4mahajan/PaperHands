@@ -31,13 +31,13 @@ import selectedProfileIcon from "../assets/images/selectedProfileIcon.png"
 const LoginStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const HomeStack=createStackNavigator()
+const PortStack=createStackNavigator()
+const NewsStack=createStackNavigator()
+const ProfileStack=createStackNavigator()
 
 const home = ({navigation}) => {
   return (
-    <HomeStack.Navigator
-    screenOptions={{
-      headerShown: false,
-    }}>
+    <HomeStack.Navigator>
       <HomeStack.Screen
         name="Inner Home"
         component={Home}
@@ -50,6 +50,39 @@ const home = ({navigation}) => {
   );
 };
 
+const port = ({navigation}) => {
+  return (
+    <PortStack.Navigator>
+      <PortStack.Screen
+        name="Portfolio"
+        component={Portfolio}
+      />
+    </PortStack.Navigator>
+  );
+}
+
+const news = ({navigation}) => {
+  return (
+    <NewsStack.Navigator>
+      <NewsStack.Screen
+        name="News"
+        component={News}
+      />
+    </NewsStack.Navigator>
+  );
+}
+
+const profile = ({navigation}) => {
+  return (
+    <ProfileStack.Navigator>
+      <ProfileStack.Screen
+        name="Profile"
+        component={Profile}
+      />
+    </ProfileStack.Navigator>
+  );
+}
+
 
 export default function Navigation({navigation}) {
     const {user} = useContext(AuthContext);
@@ -58,14 +91,16 @@ export default function Navigation({navigation}) {
             <NavigationContainer>
               <LoginStack.Navigator>
                 <LoginStack.Screen
-                  name="Login"
-                  component={Login}
-                  options={{headerLeft: () => null}}
-                  options={{header: () => null}}
+                    name="Login"
+                    component={Login}
+                    options={{headerLeft: () => null}}
+                    options={{header: () => null}}
                 />
                 <LoginStack.Screen
                     name="SignUp"
                     component={SignUp}
+                    options={{headerLeft: () => null}}
+                    options={{header: () => null}}
                 />
               </LoginStack.Navigator>
             </NavigationContainer>
@@ -74,7 +109,10 @@ export default function Navigation({navigation}) {
     if (user!=null){
         return (
             <NavigationContainer>
-              <Tab.Navigator>
+              <Tab.Navigator
+              screenOptions={{
+                headerShown: false,
+              }}>
                 <Tab.Screen
                   name="Home"
                   component={home}
@@ -98,7 +136,7 @@ export default function Navigation({navigation}) {
                 />
                 <Tab.Screen
                   name="Portfolio"
-                  component={Portfolio}
+                  component={port}
                   options={{
                     tabBarIcon: ({focused}) => {
                       if (!focused) {
@@ -119,7 +157,7 @@ export default function Navigation({navigation}) {
                 />
                 <Tab.Screen
                   name="News"
-                  component={News}
+                  component={news}
                   options={{
                     tabBarIcon: ({focused}) => {
                       if (!focused) {
@@ -140,7 +178,7 @@ export default function Navigation({navigation}) {
                 />
                 <Tab.Screen
                   name="Profile"
-                  component={Profile}
+                  component={profile}
                   options={{
                     tabBarIcon: ({focused}) => {
                       if (!focused) {
