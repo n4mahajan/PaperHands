@@ -34,17 +34,16 @@ export default function BuySell ({navigation, route}) {
 		async function fetchData() {
 			const pricing = await axios.get(`https://finnhub.io/api/v1/stock/candle?token=btnth1n48v6p0j27i8k0&symbol=${symbol}&resolution=D&from=1590988249&to=1591852249`)
 			const info = await pricing.data
-			console.log(info)
-			setYAxis(info.t)
-			setXAxis(info.c)
+			// console.log(info)
+			setYAxis(info.c) 
+			setXAxis(info.t)
 		}
 		fetchData()
-
 	}, [])
 
 	useEffect(() => {
 		finnhubClient.quote(symbol, (error, data, response) => {
-			console.log(data)
+			// console.log(data)
 			const updatedPrice = data.c
 			setPrice(updatedPrice)
 		})
@@ -61,10 +60,13 @@ export default function BuySell ({navigation, route}) {
 			</Text>	
 		</View>
 		<View>
+			{ xAxis ? (
 			<Chart 
 			xAxis = {xAxis}
 			yAxis = {yAxis}
-			/>
+			symbol = {symbol}
+			/>) : null
+			}
 		</View>
 		<View style = {styles.input}>
 			<Text>
