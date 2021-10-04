@@ -26,7 +26,7 @@ export default function Home({navigation}) {
 					return -1
 				return 1
 			})
-			console.log(companies)
+			// console.log(companies)
 			setResults(companies)
 		}
 		fetchData()

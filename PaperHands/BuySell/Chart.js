@@ -2,43 +2,34 @@ import React from 'react'
 import {View, Text, Dimensions, StyleSheet, TouchableOpacity} from 'react-native'
 import {ChartDot, ChartPath, ChartPathProvider, ChartYLabel} from '@rainbow-me/animated-charts';
 export const {width: SIZE} = Dimensions.get('window');
+import {useState,useContext} from "react"
 
 
-const Chart = ( {xAxis, yAxis, symbol}) => {
-    let data = []
-    for (var i = 0; i < yAxis.length; i++){
-        let temp = { x:xAxis[i], y:yAxis[i]}
-        data.push(temp)
-    }
-    console.log("data is")
-    console.log(data)
-
+const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
+    const [chartState, setChartState] = useState(0)
+	  const [data, setData] = useState(hourData)
     const graphs = [
       {
         label: "1H",
         value: 0,
-        data: [{x:1, y:2}],
+        data: hourData,
       },
       {
         label: "1D",
         value: 1,
-        data: [{x:3, y:4}],
+        data: dayData,
       },
       {
         label: "1M",
         value: 2,
-        data: [{x:5, y:6}],
+        data: monthData,
       },
       {
         label: "1Y",
         value: 3,
-        data: [{x:7, y:8}],
+        data: yearData,
       },
     ];
-
-    graphs.forEach((item) => {
-      console.log(item.data);
-    })
 
     const formatUSD = value => {
         'worklet';
@@ -69,28 +60,28 @@ const Chart = ( {xAxis, yAxis, symbol}) => {
         </View>
         <TouchableOpacity 			
         onPress={() => 
-          alert(`${graphs[0].label}`)}>
+          setData(hourData)}>
           <View style={styles.button}>
             <Text style={styles.buttonText}> {graphs[0].label}</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity 			
         onPress={() => 
-          alert(`${graphs[1].label}`)}>
+          setData(dayData)}>
           <View style={styles.button}>
           <Text style={styles.buttonText}> {graphs[1].label}</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity 			
         onPress={() => 
-          alert(`${graphs[2].label}`)}>
+          setData(monthData)}>
           <View style={styles.button}>
           <Text style={styles.buttonText}> {graphs[2].label}</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity 			
         onPress={() => 
-        alert(`${graphs[3].label}`)}>
+          setData(yearData)}>
           <View style={styles.button}>
           <Text style={styles.buttonText}> {graphs[3].label}</Text>
           </View>
