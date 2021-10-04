@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Text, Dimensions, StyleSheet} from 'react-native'
+import {View, Text, Dimensions, StyleSheet, TouchableOpacity} from 'react-native'
 import {ChartDot, ChartPath, ChartPathProvider, ChartYLabel} from '@rainbow-me/animated-charts';
 export const {width: SIZE} = Dimensions.get('window');
 
@@ -12,6 +12,34 @@ const Chart = ( {xAxis, yAxis, symbol}) => {
     }
     console.log("data is")
     console.log(data)
+
+    const graphs = [
+      {
+        label: "1H",
+        value: 0,
+        data: [{x:1, y:2}],
+      },
+      {
+        label: "1D",
+        value: 1,
+        data: [{x:3, y:4}],
+      },
+      {
+        label: "1M",
+        value: 2,
+        data: [{x:5, y:6}],
+      },
+      {
+        label: "1Y",
+        value: 3,
+        data: [{x:7, y:8}],
+      },
+    ];
+
+    graphs.forEach((item) => {
+      console.log(item.data);
+    })
+
     const formatUSD = value => {
         'worklet';
         if (value === '') {
@@ -39,6 +67,34 @@ const Chart = ( {xAxis, yAxis, symbol}) => {
             <ChartPath height={SIZE / 2} stroke="black" width={SIZE} />
             <ChartDot style={{ backgroundColor: 'black' }} />
         </View>
+        <TouchableOpacity 			
+        onPress={() => 
+          alert(`${graphs[0].label}`)}>
+          <View style={styles.button}>
+            <Text style={styles.buttonText}> {graphs[0].label}</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity 			
+        onPress={() => 
+          alert(`${graphs[1].label}`)}>
+          <View style={styles.button}>
+          <Text style={styles.buttonText}> {graphs[1].label}</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity 			
+        onPress={() => 
+          alert(`${graphs[2].label}`)}>
+          <View style={styles.button}>
+          <Text style={styles.buttonText}> {graphs[2].label}</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity 			
+        onPress={() => 
+        alert(`${graphs[3].label}`)}>
+          <View style={styles.button}>
+          <Text style={styles.buttonText}> {graphs[3].label}</Text>
+          </View>
+        </TouchableOpacity>
         </ChartPathProvider>
     )
 }
