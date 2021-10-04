@@ -26,14 +26,7 @@ export default function Login ({navigation}) {
 			style={styles.loginView}>
 			<View
 				pointerEvents="box-none"
-				style={{
-					position: "absolute",
-					left: 0,
-					right: 0,
-					top: 0,
-					bottom: 0,
-					justifyContent: "center",
-				}}>
+				>
 				<Image
 					source={require("./../../assets/images/login-background.png")}
 					style={styles.rectangleImage}/>
