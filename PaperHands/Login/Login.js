@@ -141,13 +141,11 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 	},
 	buttonText: {
-		color: "white",
-		fontSize: 14,
-		fontStyle: "normal",
-		fontWeight: "normal",
-		textAlign: "left",
-		backgroundColor: "transparent",
-		alignSelf: "center",
+		color: 'white',
+		fontWeight: 'bold',
+		textTransform: 'uppercase',
+		fontSize: 16,
+		textAlign: 'center',
 	},
 	extraLinksContainer: {
 		marginTop: 55,
