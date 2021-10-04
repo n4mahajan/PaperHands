@@ -7,7 +7,7 @@
 //
 
 import React, {useContext, useEffect, useState} from "react"
-import { Image, StyleSheet, Text, View, FlatList, ScrollView} from "react-native"
+import { Image, StyleSheet, Text, View, FlatList, ScrollView, ActivityIndicator} from "react-native"
 import axios from 'axios'
 import CompanyRowItem from "../Home/CompanyRowItem"
 
@@ -33,13 +33,21 @@ export default function Home({navigation}) {
 		
 	}, [])
 
-	return (
-		<View style={styles.container}>
-			<FlatList data={results} keyExtractor={(item) => item.figi} style={styles.rowItem} renderItem={({item})=>(
-				<CompanyRowItem symbol={item.symbol} description={item.description} navigation={navigation}/>
-			)}/>
-		</View>
-	)
+	if (results === null) {
+		return (
+			<View style={styles.loadingIcon}>
+				<ActivityIndicator size="large" color="black"/>
+			</View>
+		)
+	} else {
+		return (
+			<View style={styles.container}>
+				<FlatList data={results} keyExtractor={(item) => item.figi} style={styles.rowItem} renderItem={({item})=>(
+					<CompanyRowItem symbol={item.symbol} description={item.description} navigation={navigation}/>
+				)}/>
+			</View>
+		)
+	}
 };
 
 const styles = StyleSheet.create({
@@ -50,5 +58,10 @@ const styles = StyleSheet.create({
 	},
 	rowItem: {
 		width: "100%"
+	},
+	loadingIcon: {
+		justifyContent: "center",
+		alignItems: "center",
+		flex: 1
 	}
 })
