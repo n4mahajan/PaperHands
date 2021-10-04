@@ -13,38 +13,71 @@ import firebase from "firebase"
 import { Directions } from "react-native-gesture-handler";
 import { useEffect } from "react/cjs/react.development";
 import axios from "axios";
-import Chart from "./Chart"
+import Chart from "./Chart";
+import moment from "moment";
 
 export default function BuySell ({navigation, route}) {
+
+	const generateData = (xValues, yValues) => {
+		const currentData = []
+		for (var i = 0; i < yValues.length; i++){
+			let temp = { x:xValues[i], y:yValues[i]}
+			currentData.push(temp)
+		}
+		return currentData
+	}
+
 	const [price, setPrice] = useState(0)
 	const [amount, setAmount] = useState()
-	const [yAxis, setYAxis] = useState()
-	const [xAxis, setXAxis] = useState()
-	const {user,balance,stocks}=useContext(AuthContext)
+	const [balance, setBalance] = useState()
 	const [stockAmount, setStocks] = useState()
 	const [symbol, setSymbol] = useState(route.params.symbol)
+	const [hourData, setHourData] = useState([])
+	const [dayData, setDayData] = useState([])
+	const [monthData, setMonthData] = useState([])
+	const [yearData, setYearData] = useState([])
 
 	const finnhub = require('finnhub');
 
 	const api_key = finnhub.ApiClient.instance.authentications['api_key'];
-	api_key.apiKey = "btnth1n48v6p0j27i8k0"
+	api_key.apiKey = "c54gglaad3ifdcrdm7u0"
 	const finnhubClient = new finnhub.DefaultApi()
-	
-	useEffect(()=>{
-		async function fetchData() {
-			const pricing = await axios.get(`https://finnhub.io/api/v1/stock/candle?token=btnth1n48v6p0j27i8k0&symbol=${symbol}&resolution=D&from=1590988249&to=1591852249`)
-			const info = await pricing.data
-			console.log(info)
-			setYAxis(info.t)
-			setXAxis(info.c)
-		}
-		fetchData()
 
+	const now = moment().unix()
+	const hour = moment().subtract(1, "hours").unix()
+	const day = moment().subtract(1, "days").unix()
+	const month = moment().subtract(1, "months").unix()
+	const year = moment().subtract(1, "years").unix()
+
+	useEffect(() => {
+		finnhubClient.stockCandles(symbol, 1, hour, now, (error, data, response) => {
+			setHourData(generateData(data.t, data.c))
+		});
+		finnhubClient.stockCandles(symbol, 60, day, now, (error, data, response) => {
+			setDayData(generateData(data.t, data.c))
+		});
+		finnhubClient.stockCandles(symbol, "D", month, now, (error, data, response) => {
+			setMonthData(generateData(data.t, data.c))
+		});
+		finnhubClient.stockCandles(symbol, "W", year, now, (error, data, response) => {
+			setYearData(generateData(data.t, data.c))
+		});
 	}, [])
+
+	// useEffect(()=>{
+	// 	async function fetchData() {
+	// 		const pricing = await axios.get(`https://finnhub.io/api/v1/stock/candle?token=btnth1n48v6p0j27i8k0&symbol=${symbol}&resolution=D&from=${hour}&to=${now}`)
+	// 		const info = await pricing.data
+	// 		console.log(info)
+	// 		setYAxis(info.c) 
+	// 		setXAxis(info.t)
+	// 	}
+	// 	fetchData()
+	// }, [])
 
 	useEffect(() => {
 		finnhubClient.quote(symbol, (error, data, response) => {
-			console.log(data)
+			// console.log(data)
 			const updatedPrice = data.c
 			setPrice(updatedPrice)
 		})
@@ -101,10 +134,15 @@ export default function BuySell ({navigation, route}) {
 			</Text>	
 		</View>
 		<View>
+			{ yearData ? (
 			<Chart 
-			xAxis = {xAxis}
-			yAxis = {yAxis}
-			/>
+			hourData = {hourData}
+			dayData = {dayData}
+			monthData = {monthData}
+			yearData = {yearData}
+			symbol = {symbol}
+			/>) : null
+			}
 		</View>
 		<View style = {styles.input}>
 			<Text>
