@@ -40,7 +40,7 @@ export default function BuySell ({navigation, route}) {
 	const finnhub = require('finnhub');
 
 	const api_key = finnhub.ApiClient.instance.authentications['api_key'];
-	api_key.apiKey = "btnth1n48v6p0j27i8k0"
+	api_key.apiKey = "c54gglaad3ifdcrdm7u0"
 	const finnhubClient = new finnhub.DefaultApi()
 
 	const now = moment().unix()
@@ -48,7 +48,6 @@ export default function BuySell ({navigation, route}) {
 	const day = moment().subtract(1, "days").unix()
 	const month = moment().subtract(1, "months").unix()
 	const year = moment().subtract(1, "years").unix()
-
 
 	useEffect(() => {
 		finnhubClient.stockCandles(symbol, 1, hour, now, (error, data, response) => {

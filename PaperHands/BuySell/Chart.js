@@ -3,11 +3,20 @@ import {View, Text, Dimensions, StyleSheet, TouchableOpacity} from 'react-native
 import {ChartDot, ChartPath, ChartPathProvider, ChartYLabel} from '@rainbow-me/animated-charts';
 export const {width: SIZE} = Dimensions.get('window');
 import {useState,useContext} from "react"
+import { useEffect } from 'react/cjs/react.development';
 
 
 const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
-    const [chartState, setChartState] = useState(0)
-	  const [data, setData] = useState(hourData)
+	  const [data, setData] = useState()
+    const [chartReady, setChartReady] = useState(false);
+
+    useEffect(() => {
+      setTimeout(() => {
+        setChartReady(true)
+        setData(hourData)
+      }, 0)
+    }, [yearData]) 
+
     const graphs = [
       {
         label: "1H",
@@ -48,16 +57,19 @@ const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
                 {symbol}
             </Text>
         </View>
-        <View style={styles.lowerTitles}>
+          <View style={styles.lowerTitles}>
             <ChartYLabel
               format={formatUSD}
               style={styles.boldTitle}
             />
           </View>
-        <View style = {styles.chartLineWrapper}>
+          {chartReady ? 
+          (<View style = {styles.chartLineWrapper}>
             <ChartPath height={SIZE / 2} stroke="black" width={SIZE} />
             <ChartDot style={{ backgroundColor: 'black' }} />
-        </View>
+          </View>)
+          : null
+          }
         <TouchableOpacity 			
         onPress={() => 
           setData(hourData)}>
