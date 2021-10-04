@@ -91,14 +91,16 @@ export default function Navigation({navigation}) {
             <NavigationContainer>
               <LoginStack.Navigator>
                 <LoginStack.Screen
-                  name="Login"
-                  component={Login}
-                  options={{headerLeft: () => null}}
-                  options={{header: () => null}}
+                    name="Login"
+                    component={Login}
+                    options={{headerLeft: () => null}}
+                    options={{header: () => null}}
                 />
                 <LoginStack.Screen
                     name="SignUp"
                     component={SignUp}
+                    options={{headerLeft: () => null}}
+                    options={{header: () => null}}
                 />
               </LoginStack.Navigator>
             </NavigationContainer>

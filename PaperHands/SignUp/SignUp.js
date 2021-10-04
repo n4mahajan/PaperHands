@@ -7,12 +7,12 @@
 //
 
 import React,{useState,useContext} from "react"
-import { Image, StyleSheet, Text, TextInput, View,Button } from "react-native"
+import { Image, StyleSheet, Text, TextInput, View, Button, TouchableHighlight} from "react-native"
 import firebase from "firebase"
 import { AuthContext } from "../../context/AuthProvider"
 
 
-export default function SignUp(){
+export default function SignUp({navigation}) {
 	const [username,setUsername]=useState(null)
 	const [password,setPassword]=useState(null)
 	const [name,setName]=useState(null)
@@ -30,71 +30,60 @@ export default function SignUp(){
 			
 		
 	} 
-
-	
-
-	
-	
-		return (
+	// Trying to get this to work for the keyboard input
+	// https://medium.com/@nickyang0501/keyboardavoidingview-not-working-properly-c413c0a200d4
+	return (
+		<View
+			style={styles.signUpView}>
 			<View
-				style={styles.signUpView}>
-				<View
-					pointerEvents="box-none"
-					style={{
-						position: "absolute",
-						left: 0,
-						right: 0,
-						top: 0,
-						bottom: 0,
-						justifyContent: "center",
-					}}>
-					<Image
-						source={require("./../../assets/images/rectangle.png")}
-						style={styles.rectangleImage}/>
-				</View>
-				<View
-					pointerEvents="box-none"
-					style={{
-						position: "absolute",
-						left: 72,
-						right: 70,
-						top: 306,
-						bottom: 75,
-						alignItems: "flex-start",
-					}}>
-					<Text
-						style={styles.paperhandsText}>PaperHands</Text>
-					<Text
-						style={styles.theFutureOfTradingText}>The future of trading</Text>
-					<View
-						style={{
-							flex: 1,
-						}}/>
-				
-					<View
-						pointerEvents="box-none"
-						style={{
-							alignSelf: "stretch",
-							height: 34,
-							flexDirection: "row",
-							alignItems: "flex-end",
-						}}>
-					
-						
-						<View
-							style={{
-								flex: 1,
-							}}/>
-					</View>
-					
-				</View>
-				<TextInput placeholder="username" onChangeText={setUsername}/>
-				<TextInput placeholder="password" onChangeText={setPassword}/>
-				<TextInput placeholder="name" onChangeText={setName}/>
-				<Button title="create User with a starting balance of 100,000" onPress={createUser}/>
-
+				pointerEvents="box-none"
+				style={{
+					position: "absolute",
+					left: 0,
+					right: 0,
+					top: 0,
+					bottom: 0,
+					justifyContent: "center",
+				}}>
+				<Image
+					source={require("./../../assets/images/login-background.png")}
+					style={styles.rectangleImage}/>
 			</View>
-		)
+			<View
+				pointerEvents="box-none"
+				style={{
+					position: "absolute",
+					left: 72,
+					right: 71,
+					top: 306,
+					bottom: 75,
+				}}>
+				<Text
+					style={styles.paperhandsText}>PaperHands</Text>
+				<Text
+					style={styles.theFutureOfTradingText}>The future of trading</Text>
+				<Text
+					style={styles.welcomeText}>Create a Free Account</Text>
+				
+				<View style={styles.textContainer}>
+					<TextInput placeholder="Username" onChangeText={setUsername} textContentType="username" style={styles.textInput} />
+					<TextInput placeholder="Password" onChangeText={setPassword} textContentType="password" style={styles.textInput}/>
+					<TouchableHighlight onPress={createUser} style={styles.signUpButton}>
+						<Text style={styles.buttonText}>Sign Up</Text>
+					</TouchableHighlight>
+					
+				</View>
+				<View style={styles.extraLinksContainer}>
+						<TouchableHighlight underlayColor="transparent">
+							<Text style={styles.extraLinksText}>Forgot Password?</Text>
+						</TouchableHighlight>
+						<TouchableHighlight onPress={()=>{navigation.push("Login")}} underlayColor="transparent">
+							<Text style={styles.extraLinksText}>Login</Text>
+						</TouchableHighlight>
+				</View>
+			</View>
+		</View>
+	)
 	
 }
 
@@ -104,8 +93,8 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	rectangleImage: {
-		backgroundColor: "transparent",
 		resizeMode: "cover",
+		backgroundColor: "transparent",
 		width: null,
 		height: 812,
 	},
@@ -114,79 +103,75 @@ const styles = StyleSheet.create({
 		fontSize: 40,
 		fontStyle: "normal",
 		fontWeight: "normal",
-		textAlign: "left",
 		backgroundColor: "transparent",
-		alignSelf: "flex-end",
-		marginRight: 1,
+		alignSelf: "center",
 	},
 	theFutureOfTradingText: {
 		color: "black",
-		fontSize: 22,
+		fontSize: 20,
 		fontStyle: "normal",
 		fontWeight: "normal",
-		textAlign: "left",
 		backgroundColor: "transparent",
-		alignSelf: "flex-end",
-		marginRight: 16,
+		alignSelf: "center",
+		marginRight: 15,
 		marginTop: 7,
 	},
-	createAFreeAccounText: {
-		backgroundColor: "transparent",
+	welcomeText: {
 		color: "black",
 		fontSize: 22,
 		fontStyle: "normal",
 		fontWeight: "normal",
-		textAlign: "left",
-		marginTop: 70,
-	},
-	eMailText: {
 		backgroundColor: "transparent",
-		color: "black",
-		fontSize: 14,
-		fontStyle: "normal",
-		fontWeight: "normal",
-		textAlign: "left",
-		width: 38,
-		marginLeft: 14,
-		marginTop: 34,
+		marginTop: 68,
+		paddingLeft: 10,
+		width: "100%",
+		alignSelf: "center"
 	},
-	passwordText: {
-		backgroundColor: "transparent",
-		color: "black",
-		fontSize: 14,
-		fontStyle: "normal",
-		fontWeight: "normal",
-		textAlign: "left",
-		width: 58,
-		marginLeft: 14,
-		marginTop: 31,
+	textContainer: {
+		justifyContent: "flex-start",
+		alignItems: "center",
+		height: "35%",
 	},
-	signUpText: {
-		color: "black",
+	textInput: {
+		borderWidth: 1,
+		backgroundColor: "#E8E8E8",
+		borderRadius: 15,
+		height: "33%",
+		width: "100%",
+		marginTop: 15,
+		paddingLeft: 15
+	},
+	signUpButton: {
+		borderWidth: 1,
+		backgroundColor: "black",
+		marginTop: 15,
+		borderRadius: 15,
+		height: "33%",
+		width: "100%",
+		justifyContent: "center",
+	},
+	buttonText: {
+		color: "white",
 		fontSize: 14,
 		fontStyle: "normal",
 		fontWeight: "normal",
 		textAlign: "left",
 		backgroundColor: "transparent",
 		alignSelf: "center",
-		marginBottom: 35,
 	},
-	forgotPasswordText: {
-		backgroundColor: "transparent",
-		color: "black",
+	extraLinksContainer: {
+		marginTop: 55,
+		justifyContent: "space-between",
+		flexDirection: "row",
+		paddingLeft: 7,
+		paddingRight: 7,
+		paddingBottom: 20
+	},
+	extraLinksText: {
+		color: "gray",
 		fontSize: 14,
 		fontStyle: "normal",
 		fontWeight: "normal",
-		textAlign: "left",
-		width: 107,
-	},
-	loginText: {
 		backgroundColor: "transparent",
-		color: "black",
-		fontSize: 14,
-		fontStyle: "normal",
-		fontWeight: "normal",
-		textAlign: "left",
-		width: 34,
-	},
+	}
 })
