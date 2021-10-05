@@ -15,7 +15,7 @@ const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
         setChartReady(true)
         setData(hourData)
       }, 0)
-    }, [yearData]) 
+    }, []) 
 
     const graphs = [
       {

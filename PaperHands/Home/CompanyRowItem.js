@@ -14,7 +14,7 @@ export default function CompanyRowItem(props) {
 			const response = await axios.get(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=btnth1n48v6p0j27i8k0`)
 			const profile = await response.data
 
-            console.log(profile.c)
+            // console.log(profile.c)
 
             // Extract price data from company
 			setPrice(profile.c.toFixed(2))
