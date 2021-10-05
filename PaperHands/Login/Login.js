@@ -35,37 +35,36 @@ export default function Login ({navigation}) {
 				pointerEvents="box-none"
 				style={{
 					position: "absolute",
-					left: 72,
-					right: 71,
-					top: 306,
-					bottom: 75,
+					left: "20%",
+					right: "20%",
+					top: "37%",
 				}}>
-				<Text
-					style={styles.paperhandsText}>PaperHands</Text>
-				<Text
-					style={styles.theFutureOfTradingText}>The future of trading</Text>
-				<Text
-					style={styles.welcomeText}>Welcome!</Text>
+				<View style={styles.titleContainer}>
+					<Text
+						style={styles.paperhandsText}>PaperHands</Text>
+					<Text
+						style={styles.theFutureOfTradingText}>The future of trading</Text>
+				</View>
 				
-				<View style={styles.textContainer}>
-					<TextInput placeholder="Username" onChangeText={setUsername} textContentType="username" style={styles.textInput} />
-					<TextInput placeholder="Password" onChangeText={setPassword} textContentType="password" style={styles.textInput}/>
-					<TouchableHighlight onPress={login} style={styles.loginButton}>
-						<Text style={styles.buttonText}>Login</Text>
-					</TouchableHighlight>
-					
-				</View>
-				<View style={styles.extraLinksContainer}>
-						<TouchableHighlight underlayColor="transparent">
-							<Text style={styles.extraLinksText}>Forgot Password?</Text>
+				<View style={styles.loginContainer}>
+					<Text style={styles.welcomeText}>Welcome!</Text>
+					<View style={styles.textContainer}>
+						<TextInput placeholder="Username" onChangeText={setUsername} textContentType="username" style={styles.textInput} />
+						<TextInput placeholder="Password" onChangeText={setPassword} textContentType="password" style={styles.textInput}/>
+						<TouchableHighlight onPress={login} style={styles.loginButton}>
+							<Text style={styles.buttonText}>Login</Text>
 						</TouchableHighlight>
-						<TouchableHighlight onPress={()=>{navigation.push("SignUp")}} underlayColor="transparent">
-							<Text style={styles.extraLinksText}>Sign Up</Text>
-						</TouchableHighlight>
+						
+					</View>
+					<View style={styles.extraLinksContainer}>
+							<TouchableHighlight underlayColor="transparent">
+								<Text style={styles.extraLinksText}>Forgot Password?</Text>
+							</TouchableHighlight>
+							<TouchableHighlight onPress={()=>{navigation.push("SignUp")}} underlayColor="transparent">
+								<Text style={styles.extraLinksText}>Sign Up</Text>
+							</TouchableHighlight>
+					</View>
 				</View>
-				<Button title="Quick Login Kiran" onPress={()=>{
-					firebase.auth().signInWithEmailAndPassword('kiran@gmail.com','Testing')
-				}}/>
 			</View>
 		</View>
 	)
@@ -75,7 +74,7 @@ export default function Login ({navigation}) {
 const styles = StyleSheet.create({
 	loginView: {
 		backgroundColor: "white",
-		flex: 1,
+		flex: 1
 	},
 	rectangleImage: {
 		resizeMode: "cover",
@@ -154,5 +153,11 @@ const styles = StyleSheet.create({
 		fontStyle: "normal",
 		fontWeight: "normal",
 		backgroundColor: "transparent",
+	},
+	titleContainer: {
+		top: "15%"
+	},
+	loginContainer: {
+		top: "12%"
 	}
 })
