@@ -14,29 +14,29 @@ import CompanyRowItem from "../Home/CompanyRowItem"
 export default function Home({navigation}) {
 	const [search, setSearch] = useState('')
 	const [results, setResults] = useState(null)
-	const [loading,setLoading]=useState(true)
+	const [loading,setLoading] = useState(true)
 
-	useEffect(async() => {
-
+	useEffect(() => {
 		async function fetchData() {
-			const response = await axios.get(`https://finnhub.io/api/v1/stock/symbol?exchange=US&token=c54gglaad3ifdcrdm7u0`)
-			let companies = await response.data
-			companies = companies.splice(0, 30)
-			companies = companies.filter(item => item.type === "Common Stock")
+			// const response = await axios.get(`https://finnhub.io/api/v1/stock/symbol?exchange=US&token=c54gglaad3ifdcrdm7u0`)
+			// Get list of companies with highest volume of stocks sold today
+			const response = await axios.get(`https://financialmodelingprep.com/api/v3/stock/actives?apikey=fc55df44cfed6224751cf95bc49f98ec`)
+			let companies = await response.data.mostActiveStock
+			//companies = await companies.filter(item => item.type === "Common Stock")
 			// Initially sort companies in ascending order by their symbol
 			companies.sort(function(a, b){
-				if (a.symbol < b.symbol)
+				if (a.ticker < b.ticker)
 					return -1
 				return 1
 			})
 			setResults(companies)
 		}
-		await fetchData()
+		fetchData()
 		setLoading(false)
 		
 	}, [])
 
-	if (loading==true) {
+	if (loading === true) {
 		return (
 			<View style={styles.loadingIcon}>
 				<ActivityIndicator size="large" color="black"/>
@@ -45,8 +45,9 @@ export default function Home({navigation}) {
 	} else {
 		return (
 			<View style={styles.container}>
-				<FlatList data={results} keyExtractor={(item) => item.figi} style={styles.rowItem} renderItem={({item})=>(
-					<CompanyRowItem symbol={item.symbol} description={item.description} navigation={navigation}/>
+				<FlatList data={results} keyExtractor={(item) => item.ticker} style={styles.rowItem} renderItem={({item})=>(
+					<CompanyRowItem symbol={item.ticker} description={item.companyName} price={Number(item.price).toFixed(2)} priceChange={Number(item.changes).toFixed(2)} 
+						percentChange={Number(item.changesPercentage).toFixed(2)} navigation={navigation}/>
 				)}/>
 			</View>
 		)
