@@ -34,10 +34,9 @@ export default function Login ({navigation}) {
 			<View
 				pointerEvents="box-none"
 				style={{
-					position: "absolute",
-					left: "20%",
-					right: "20%",
-					top: "37%",
+					position: "relative",
+					height: "100%",
+					bottom: "77%",
 				}}>
 				<View style={styles.titleContainer}>
 					<Text
@@ -54,16 +53,16 @@ export default function Login ({navigation}) {
 						<TouchableHighlight onPress={login} style={styles.loginButton}>
 							<Text style={styles.buttonText}>Login</Text>
 						</TouchableHighlight>
-						
-					</View>
-					<View style={styles.extraLinksContainer}>
+						<View style={styles.extraLinksContainer}>
 							<TouchableHighlight underlayColor="transparent">
 								<Text style={styles.extraLinksText}>Forgot Password?</Text>
 							</TouchableHighlight>
 							<TouchableHighlight onPress={()=>{navigation.push("SignUp")}} underlayColor="transparent">
 								<Text style={styles.extraLinksText}>Sign Up</Text>
 							</TouchableHighlight>
+						</View>
 					</View>
+					
 				</View>
 			</View>
 		</View>
@@ -74,13 +73,15 @@ export default function Login ({navigation}) {
 const styles = StyleSheet.create({
 	loginView: {
 		backgroundColor: "white",
+		position: "relative",
 		flex: 1
 	},
 	rectangleImage: {
 		resizeMode: "cover",
 		backgroundColor: "transparent",
 		width: null,
-		height: 812,
+		height: "100%",
+		position: "relative"
 	},
 	paperhandsText: {
 		color: "black",
@@ -97,8 +98,8 @@ const styles = StyleSheet.create({
 		fontWeight: "normal",
 		backgroundColor: "transparent",
 		alignSelf: "center",
-		marginRight: 15,
-		marginTop: 7,
+		marginRight: "5%",
+		marginTop: "2%",
 	},
 	welcomeText: {
 		color: "black",
@@ -106,31 +107,30 @@ const styles = StyleSheet.create({
 		fontStyle: "normal",
 		fontWeight: "normal",
 		backgroundColor: "transparent",
-		marginLeft: 59,
-		marginTop: 68,
+		alignSelf: "center",
 	},
 	textContainer: {
 		justifyContent: "flex-start",
-		alignItems: "center",
-		height: "35%"
+		height: "40%",
 	},
 	textInput: {
 		borderWidth: 1,
 		backgroundColor: "#E8E8E8",
 		borderRadius: 15,
-		height: "33%",
+		height: "20%",
 		width: "100%",
-		marginTop: 15,
-		paddingLeft: 15
+		marginTop: "5%",
+		paddingLeft: "6%"
 	},
 	loginButton: {
 		borderWidth: 1,
 		backgroundColor: "black",
-		marginTop: 15,
+		marginTop: "5%",
 		borderRadius: 15,
-		height: "33%",
+		height: "20%",
 		width: "100%",
 		justifyContent: "center",
+		marginBottom: "2%"
 	},
 	buttonText: {
 		color: 'white',
@@ -140,24 +140,26 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 	},
 	extraLinksContainer: {
-		marginTop: 55,
 		justifyContent: "space-between",
 		flexDirection: "row",
-		paddingLeft: 7,
-		paddingRight: 7,
-		paddingBottom: 20
+		paddingLeft: "3%",
+		paddingRight: "3%",
 	},
 	extraLinksText: {
 		color: "gray",
 		fontSize: 14,
 		fontStyle: "normal",
 		fontWeight: "normal",
-		backgroundColor: "transparent",
+		backgroundColor: "transparent"
 	},
 	titleContainer: {
 		top: "15%"
 	},
 	loginContainer: {
-		top: "12%"
+		top: "25%",
+		height: "100%",
+		width: "80%",
+		alignSelf: "center",
+		flex: 1
 	}
 })
