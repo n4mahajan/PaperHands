@@ -7,7 +7,7 @@
 //
 
 import React,{useState} from "react"
-import { Image, StyleSheet, Text, TextInput, View, Button, TouchableHighlight } from "react-native"
+import { Image, StyleSheet, Text, TextInput, View, Button, TouchableHighlight, Alert } from "react-native"
 import firebase from "firebase"
 
 export default function Login ({navigation}) {
@@ -17,6 +17,8 @@ export default function Login ({navigation}) {
 	const login=()=>{
 		firebase.auth().signInWithEmailAndPassword(username+'@gmail.com',password).then(()=>{
 			console.log('here')
+		}).catch((error)=>{
+			Alert.alert("Login failed: your username and/or password was incorrect")
 		})
 	}
 
@@ -49,7 +51,7 @@ export default function Login ({navigation}) {
 					<Text style={styles.welcomeText}>Welcome!</Text>
 					<View style={styles.textContainer}>
 						<TextInput placeholder="Username" onChangeText={setUsername} textContentType="username" style={styles.textInput} />
-						<TextInput placeholder="Password" onChangeText={setPassword} textContentType="password" style={styles.textInput}/>
+						<TextInput placeholder="Password" secureTextEntry={true} onChangeText={setPassword} textContentType="password" style={styles.textInput}/>
 						<TouchableHighlight onPress={login} style={styles.loginButton}>
 							<Text style={styles.buttonText}>Login</Text>
 						</TouchableHighlight>

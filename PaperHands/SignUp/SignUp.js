@@ -7,7 +7,7 @@
 //
 
 import React,{useState,useContext} from "react"
-import { Image, StyleSheet, Text, TextInput, View, Button, TouchableHighlight} from "react-native"
+import { Image, StyleSheet, Text, TextInput, View, Button, TouchableHighlight, Alert} from "react-native"
 import firebase from "firebase"
 import { AuthContext } from "../../context/AuthProvider"
 
@@ -21,7 +21,9 @@ export default function SignUp({navigation}) {
 	const {user}=useContext(AuthContext) 
 
 	const createUser=async()=>{
-		let newUser=await firebase.auth().createUserWithEmailAndPassword(username+'@gmail.com',password)
+		let newUser=await firebase.auth().createUserWithEmailAndPassword(username+'@gmail.com',password).catch((error)=>{
+			Alert.alert("There was an error while creaitng your account")
+		})
 		firebase.firestore().collection('Users').doc(newUser.user.uid).set({
 				name,
 				balance,
@@ -60,7 +62,7 @@ export default function SignUp({navigation}) {
 					<Text style={styles.welcomeText}>Create a Free Account</Text>
 					<View style={styles.textContainer}>
 						<TextInput placeholder="Username" onChangeText={setUsername} textContentType="username" style={styles.textInput} />
-						<TextInput placeholder="Password" onChangeText={setPassword} textContentType="password" style={styles.textInput}/>
+						<TextInput placeholder="Password" secureTextEntry={true} onChangeText={setPassword} textContentType="password" style={styles.textInput}/>
 						<TouchableHighlight onPress={createUser} style={styles.signUpButton}>
 							<Text style={styles.buttonText}>Sign Up</Text>
 						</TouchableHighlight>
