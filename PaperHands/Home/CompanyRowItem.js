@@ -3,14 +3,17 @@ import { Image, TouchableHighlight, StyleSheet, Text, View } from "react-native"
 import axios from 'axios'
 
 export default function CompanyRowItem(props) {
-    const {symbol, description} = props;
+    const {symbol, description, price, priceChange, percentChange} = props;
 
+    /*
     const [price, setPrice] = useState(null)
     const [priceChange, setPriceChange] = useState(null)
     const [percentChange, setPercentChange] = useState(null)
+    */
 
     useEffect(() => {
 		async function fetchData() {
+            /*
 			const response = await axios.get(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=btnth1n48v6p0j27i8k0`)
 			const profile = await response.data
 
@@ -18,6 +21,7 @@ export default function CompanyRowItem(props) {
 			setPrice(profile.c.toFixed(2))
             setPriceChange(profile.d.toFixed(2))
             setPercentChange(profile.dp.toFixed(2))
+            */
 		}
 		fetchData()
 		
