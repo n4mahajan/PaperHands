@@ -1,9 +1,11 @@
 import React from 'react'
 import {View, Text, Dimensions, StyleSheet, TouchableOpacity} from 'react-native'
-import {ChartDot, ChartPath, ChartPathProvider, ChartYLabel} from '@rainbow-me/animated-charts';
+import {ChartDot, ChartPath, ChartPathProvider, ChartYLabel, ChartXLabel} from '@rainbow-me/animated-charts';
 export const {width: SIZE} = Dimensions.get('window');
 import {useState,useContext} from "react"
 import { useEffect } from 'react/cjs/react.development';
+import { block } from 'react-native-reanimated';
+import moment from "moment";
 
 
 const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
@@ -49,16 +51,32 @@ const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
           currency: 'USD',
         })}`;
     };
+
+    const formatDate = value => {
+      'worklet';
+      if (value === '') {
+        return '';
+      }
+      var val = parseInt(value);
+      const date = new Date(Number(val * 1000));
+      const s = date.getSeconds();
+      const m = date.getMinutes();
+      const h = date.getHours();
+      const d = date.getDate();
+      const n = date.getMonth();
+      const y = date.getFullYear();
+      return `${y}-${n}-${d}${h}:${m}:${s}`;
+    };
+
     return (
         <ChartPathProvider data={{ points:data, smoothingStrategy: 'bezier' }}>
-        <View>
-            <Text>
-                {symbol}
-            </Text>
-        </View>
           <View style={styles.lowerTitles}>
             <ChartYLabel
               format={formatUSD}
+              style={styles.boldTitle}
+            />
+            <ChartXLabel
+              format={formatDate}
               style={styles.boldTitle}
             />
           </View>
@@ -69,34 +87,36 @@ const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
           </View>)
           : null
           }
-        <TouchableOpacity 			
-        onPress={() => 
-          setData(hourData)}>
-          <View style={styles.button}>
-            <Text style={styles.buttonText}> {graphs[0].label}</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity 			
-        onPress={() => 
-          setData(dayData)}>
-          <View style={styles.button}>
-          <Text style={styles.buttonText}> {graphs[1].label}</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity 			
-        onPress={() => 
-          setData(monthData)}>
-          <View style={styles.button}>
-          <Text style={styles.buttonText}> {graphs[2].label}</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity 			
-        onPress={() => 
-          setData(yearData)}>
-          <View style={styles.button}>
-          <Text style={styles.buttonText}> {graphs[3].label}</Text>
-          </View>
-        </TouchableOpacity>
+        <View style = {styles.buttonContainer}>
+          <TouchableOpacity 			
+          onPress={() => 
+            setData(hourData)}>
+            <View style={styles.button}>
+              <Text style={styles.buttonText}> {graphs[0].label}</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity 		
+          onPress={() => 
+            setData(dayData)}>
+            <View style={styles.button}>
+            <Text style={styles.buttonText}> {graphs[1].label}</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity 			
+          onPress={() => 
+            setData(monthData)}>
+            <View style={styles.button}>
+            <Text style={styles.buttonText}> {graphs[2].label}</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity 			
+          onPress={() => 
+            setData(yearData)}>
+            <View style={styles.button}>
+            <Text style={styles.buttonText}> {graphs[3].label}</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
         </ChartPathProvider>
     )
 }
@@ -140,6 +160,11 @@ const styles = StyleSheet.create({
     },
     chartLineWrapper: {
       marginTop: 40,
+    },
+    buttonContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: "space-around",
     },
   });
 

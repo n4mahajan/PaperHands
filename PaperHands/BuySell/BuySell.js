@@ -42,7 +42,6 @@ export default function BuySell ({navigation, route}) {
 	const api_key = finnhub.ApiClient.instance.authentications['api_key'];
 	api_key.apiKey = "c54gglaad3ifdcrdm7u0"
 	const finnhubClient = new finnhub.DefaultApi()
-
 	const now = moment().unix()
 	const hour = moment().subtract(1, "hours").unix()
 	const day = moment().subtract(1, "days").unix()
