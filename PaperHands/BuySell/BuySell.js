@@ -83,7 +83,6 @@ export default function BuySell ({navigation, route}) {
 	}, [])
 
 	const buy=async()=>{
-		console.log("USER HERE")
 		const numberAmount=parseInt(amount)
 		const totalCost= numberAmount*price
 		if (balance>=totalCost){
