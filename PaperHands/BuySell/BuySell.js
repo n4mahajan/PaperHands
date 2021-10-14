@@ -50,18 +50,22 @@ export default function BuySell ({navigation, route}) {
 	const year = moment().subtract(1, "years").unix()
 
 	useEffect(() => {
-		finnhubClient.stockCandles(symbol, 1, hour, now, (error, data, response) => {
-			setHourData(generateData(data.t, data.c))
-		});
-		finnhubClient.stockCandles(symbol, 60, day, now, (error, data, response) => {
-			setDayData(generateData(data.t, data.c))
-		});
-		finnhubClient.stockCandles(symbol, "D", month, now, (error, data, response) => {
-			setMonthData(generateData(data.t, data.c))
-		});
-		finnhubClient.stockCandles(symbol, "W", year, now, (error, data, response) => {
-			setYearData(generateData(data.t, data.c))
-		});
+		async function getData() {
+			await finnhubClient.stockCandles(symbol, 1, hour, now, (error, data, response) => {
+				setHourData(generateData(data.t, data.c))
+			});
+			await finnhubClient.stockCandles(symbol, 60, day, now, (error, data, response) => {
+				setDayData(generateData(data.t, data.c))
+			});
+			await finnhubClient.stockCandles(symbol, "D", month, now, (error, data, response) => {
+				setMonthData(generateData(data.t, data.c))
+			});
+			await finnhubClient.stockCandles(symbol, "W", year, now, (error, data, response) => {
+				setYearData(generateData(data.t, data.c))
+			});
+		}
+
+		getData()
 	}, [])
 
 	// useEffect(()=>{
@@ -104,7 +108,7 @@ export default function BuySell ({navigation, route}) {
 		const numberAmount=parseInt(amount)
 		const totalGain= numberAmount*price
 		if(stocks.hasOwnProperty(symbol)){
-			if(stocks[symbol]>numberAmount){
+			if(stocks[symbol]>=numberAmount){
 				stocks[symbol]-=numberAmount
 				if (stocks[symbol]<=0){
 					delete stocks[symbol]
@@ -146,7 +150,7 @@ export default function BuySell ({navigation, route}) {
 
 		<View styles = {styles.input}>
 			<Text>
-				Enter amount to buy/sell:	
+				Enter amount of shares:	
 			</Text>
 			<TextInput placeholder="Amount" onChangeText={setAmount} keyboardType="numeric"/>
 		</View>
@@ -202,13 +206,13 @@ const styles = StyleSheet.create( {
 		paddingHorizontal: 10,
 		backgroundColor: 'black',
 		width: 100,
-		height: 50,
+		height: 50
 	  },
 	buttonText: {
 		color: 'white',
 		fontWeight: 'bold',
 		textTransform: 'uppercase',
 		fontSize: 16,
-		textAlign: 'center',
+		textAlign: 'center'
 	},
 });
