@@ -126,6 +126,22 @@ export default function BuySell ({navigation, route}) {
 		flex: 1,
 		background: "blue",
 	}}>
+		<View style = {styles.priceContainer}>
+			<Text >
+				{symbol} Price: ${price}
+			</Text>	
+		</View>
+		<View>
+			{ yearData ? (
+			<Chart 
+			hourData = {hourData}
+			dayData = {dayData}
+			monthData = {monthData}
+			yearData = {yearData}
+			symbol = {symbol}
+			/>) : null
+			}
+		</View>
 		<View style = {styles.input}>
 			<Text>
 				Enter amount of shares:	
@@ -161,35 +177,17 @@ export default function BuySell ({navigation, route}) {
 		</TouchableOpacity>
 
 		</View>
-		<View style = {styles.container}>
-			<Text >
-				{symbol} Price: ${price}
-			</Text>	
-		</View>
-		<View>
-			{ yearData ? (
-			<Chart 
-			hourData = {hourData}
-			dayData = {dayData}
-			monthData = {monthData}
-			yearData = {yearData}
-			symbol = {symbol}
-			/>) : null
-			}
-		</View>
-		
-		
 		
 	</View>
 	)
 }
 
 const styles = StyleSheet.create( {
-	container: {
+	priceContainer: {
 		flex: 1,
 		alignItems: "center",
 		justifyContent: "center",
-		top: 50,
+		top: 25,
 	},
 	input: {
 		flex: 1,
