@@ -39,7 +39,7 @@ const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
         if (value === '') {
           return '';
         }
-        return `$ ${value.toLocaleString('en-US', {
+        return `$${value.toLocaleString('en-US', {
           currency: 'USD',
         })}`;
     };
@@ -51,12 +51,25 @@ const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
       }
       var val = parseInt(value);
       const date = new Date(Number(val * 1000));
-      const m = date.getMinutes();
-      const h = date.getHours();
       const d = date.getDate();
       const n = date.getMonth();
       const y = date.getFullYear();
-      return `${y}-${n}-${d} ${h}:${m}`;
+      return `${y}-${n}-${d}`;
+    };
+
+    const formatTime = value => {
+      'worklet';
+      if (value === '') {
+        return '';
+      }
+      var val = parseInt(value);
+      const date = new Date(Number(val * 1000));
+      let m = date.getMinutes();
+      const h = date.getHours();
+      if (m < 10) {
+        return `${h}:0${m}`
+      }
+      return `${h}:${m}`;
     };
 
     return (
@@ -68,6 +81,10 @@ const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
             />
             <ChartXLabel
               format={formatDate}
+              style={styles.boldTitle}
+            />
+            <ChartXLabel
+              format={formatTime}
               style={styles.boldTitle}
             />
           </View>
