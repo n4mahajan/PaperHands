@@ -49,18 +49,22 @@ export default function BuySell ({navigation, route}) {
 	const year = moment().subtract(1, "years").unix()
 
 	useEffect(() => {
-		finnhubClient.stockCandles(symbol, 1, hour, now, (error, data, response) => {
-			setHourData(generateData(data.t, data.c))
-		});
-		finnhubClient.stockCandles(symbol, 60, day, now, (error, data, response) => {
-			setDayData(generateData(data.t, data.c))
-		});
-		finnhubClient.stockCandles(symbol, "D", month, now, (error, data, response) => {
-			setMonthData(generateData(data.t, data.c))
-		});
-		finnhubClient.stockCandles(symbol, "W", year, now, (error, data, response) => {
-			setYearData(generateData(data.t, data.c))
-		});
+		async function getData() {
+			await finnhubClient.stockCandles(symbol, 1, hour, now, (error, data, response) => {
+				setHourData(generateData(data.t, data.c))
+			});
+			await finnhubClient.stockCandles(symbol, 60, day, now, (error, data, response) => {
+				setDayData(generateData(data.t, data.c))
+			});
+			await finnhubClient.stockCandles(symbol, "D", month, now, (error, data, response) => {
+				setMonthData(generateData(data.t, data.c))
+			});
+			await finnhubClient.stockCandles(symbol, "W", year, now, (error, data, response) => {
+				setYearData(generateData(data.t, data.c))
+			});
+		}
+
+		getData()
 	}, [])
 
 	// useEffect(()=>{
