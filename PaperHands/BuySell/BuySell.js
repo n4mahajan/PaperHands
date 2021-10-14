@@ -29,13 +29,13 @@ export default function BuySell ({navigation, route}) {
 
 	const [price, setPrice] = useState(0)
 	const [amount, setAmount] = useState()
-	const [balance, setBalance] = useState()
 	const [stockAmount, setStocks] = useState()
 	const [symbol, setSymbol] = useState(route.params.symbol)
 	const [hourData, setHourData] = useState([])
 	const [dayData, setDayData] = useState([])
 	const [monthData, setMonthData] = useState([])
 	const [yearData, setYearData] = useState([])
+	const {user,balance,stocks}=useContext(AuthContext)
 
 	const finnhub = require('finnhub');
 
@@ -83,6 +83,7 @@ export default function BuySell ({navigation, route}) {
 	}, [])
 
 	const buy=async()=>{
+		
 		const numberAmount=parseInt(amount)
 		const totalCost= numberAmount*price
 		if (balance>=totalCost){
@@ -96,7 +97,6 @@ export default function BuySell ({navigation, route}) {
 				balance:balance-totalCost
 			})
 		}
-
 	}
 
 	const sell=async()=>{
@@ -126,29 +126,12 @@ export default function BuySell ({navigation, route}) {
 		flex: 1,
 		background: "blue",
 	}}>
-		<View style = {styles.container}>
-			<Text >
-				{symbol} Price: ${price}
-			</Text>	
-		</View>
-		<View>
-			{ hourData ? (
-			<Chart 
-			hourData = {hourData}
-			dayData = {dayData}
-			monthData = {monthData}
-			yearData = {yearData}
-			symbol = {symbol}
-			/>) : null
-			}
-		</View>
 		<View style = {styles.input}>
 			<Text>
 				Enter amount to buy/sell:	
 			</Text>
 			<TextInput placeholder="Amount" onChangeText={setAmount} keyboardType="numeric"/>
 		</View>
-		
 		<View style = {{
 			flex: 1,
 			flexDirection: "row",
@@ -178,6 +161,25 @@ export default function BuySell ({navigation, route}) {
 		</TouchableOpacity>
 
 		</View>
+		<View style = {styles.container}>
+			<Text >
+				{symbol} Price: ${price}
+			</Text>	
+		</View>
+		<View>
+			{ yearData ? (
+			<Chart 
+			hourData = {hourData}
+			dayData = {dayData}
+			monthData = {monthData}
+			yearData = {yearData}
+			symbol = {symbol}
+			/>) : null
+			}
+		</View>
+		
+		
+		
 	</View>
 	)
 }
