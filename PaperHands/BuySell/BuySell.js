@@ -103,7 +103,7 @@ export default function BuySell ({navigation, route}) {
 		const numberAmount=parseInt(amount)
 		const totalGain= numberAmount*price
 		if(stocks.hasOwnProperty(symbol)){
-			if(stocks[symbol]>numberAmount){
+			if(stocks[symbol]>=numberAmount){
 				stocks[symbol]-=numberAmount
 				if (stocks[symbol]<=0){
 					delete stocks[symbol]
@@ -128,7 +128,7 @@ export default function BuySell ({navigation, route}) {
 	}}>
 		<View style = {styles.input}>
 			<Text>
-				Enter amount to buy/sell:	
+				Enter amount of shares:	
 			</Text>
 			<TextInput placeholder="Amount" onChangeText={setAmount} keyboardType="numeric"/>
 		</View>
