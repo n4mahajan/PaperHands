@@ -9,15 +9,7 @@ import moment from "moment";
 
 
 const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
-	  const [data, setData] = useState()
-    const [chartReady, setChartReady] = useState(false);
-
-    useEffect(() => {
-      setTimeout(() => {
-        setChartReady(true)
-        setData(hourData)
-      }, 0)
-    }, []) 
+	  const [data, setData] = useState(hourData)
 
     const graphs = [
       {
@@ -59,13 +51,12 @@ const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
       }
       var val = parseInt(value);
       const date = new Date(Number(val * 1000));
-      const s = date.getSeconds();
       const m = date.getMinutes();
       const h = date.getHours();
       const d = date.getDate();
       const n = date.getMonth();
       const y = date.getFullYear();
-      return `${y}-${n}-${d}${h}:${m}:${s}`;
+      return `${y}-${n}-${d} ${h}:${m}`;
     };
 
     return (
@@ -80,13 +71,10 @@ const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
               style={styles.boldTitle}
             />
           </View>
-          {chartReady ? 
-          (<View style = {styles.chartLineWrapper}>
+          <View style = {styles.chartLineWrapper}>
             <ChartPath height={SIZE / 2} stroke="black" width={SIZE} />
             <ChartDot style={{ backgroundColor: 'black' }} />
-          </View>)
-          : null
-          }
+          </View>
         <View style = {styles.buttonContainer}>
           <TouchableOpacity 			
           onPress={() => 
@@ -144,7 +132,7 @@ const styles = StyleSheet.create({
     },
     subtitle: {
       fontSize: 14,
-      color: '#A9ABB1',
+      color: 'black',
     },
     lowerTitles: {
       flexDirection: 'row',
@@ -154,6 +142,7 @@ const styles = StyleSheet.create({
     boldTitle: {
       fontSize: 24,
       fontWeight: 'bold',
+      color: 'black',
     },
     title: {
       fontSize: 18,

@@ -132,7 +132,7 @@ export default function BuySell ({navigation, route}) {
 			</Text>	
 		</View>
 		<View>
-			{ yearData ? (
+			{ hourData ? (
 			<Chart 
 			hourData = {hourData}
 			dayData = {dayData}
