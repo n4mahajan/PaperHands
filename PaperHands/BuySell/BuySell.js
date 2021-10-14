@@ -200,13 +200,13 @@ const styles = StyleSheet.create( {
 		paddingHorizontal: 10,
 		backgroundColor: 'black',
 		width: 100,
-		height: 50,
+		height: 50
 	  },
 	buttonText: {
 		color: 'white',
 		fontWeight: 'bold',
 		textTransform: 'uppercase',
 		fontSize: 16,
-		textAlign: 'center',
+		textAlign: 'center'
 	},
 });
