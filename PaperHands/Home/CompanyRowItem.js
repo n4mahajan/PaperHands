@@ -3,23 +3,25 @@ import { Image, TouchableHighlight, StyleSheet, Text, View } from "react-native"
 import axios from 'axios'
 
 export default function CompanyRowItem(props) {
-    const {symbol, description} = props;
+    const {symbol, description, price, priceChange, percentChange} = props;
 
+    /*
     const [price, setPrice] = useState(null)
     const [priceChange, setPriceChange] = useState(null)
     const [percentChange, setPercentChange] = useState(null)
+    */
 
     useEffect(() => {
 		async function fetchData() {
+            /*
 			const response = await axios.get(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=btnth1n48v6p0j27i8k0`)
 			const profile = await response.data
-
-            console.log(profile.c)
 
             // Extract price data from company
 			setPrice(profile.c.toFixed(2))
             setPriceChange(profile.d.toFixed(2))
             setPercentChange(profile.dp.toFixed(2))
+            */
 		}
 		fetchData()
 		
@@ -44,7 +46,7 @@ export default function CompanyRowItem(props) {
                     <TouchableHighlight style={styles.priceBox}>
 						<Text>${ price }</Text>
 					</TouchableHighlight>
-                    <Text style={styles.priceText}>{priceChange} ({percentChange}%)</Text>
+                    <Text style={[styles.priceText, priceChange > 0 ? styles.priceIncreased : priceChange === 0 ? styles.priceSame : styles.priceDecreased]}>{priceChange} ({percentChange}%)</Text>
                 </View>
             </View>
 		</TouchableHighlight>
@@ -87,5 +89,14 @@ const styles = StyleSheet.create({
     },
     priceText: {
         paddingTop: 5
+    },
+    priceIncreased: {
+        color: "green"
+    },
+    priceDecreased: {
+        color: "red"
+    },
+    priceSame: {
+        color: "black"
     }
 })

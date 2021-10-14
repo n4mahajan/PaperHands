@@ -42,7 +42,6 @@ export default function BuySell ({navigation, route}) {
 	const api_key = finnhub.ApiClient.instance.authentications['api_key'];
 	api_key.apiKey = "c54gglaad3ifdcrdm7u0"
 	const finnhubClient = new finnhub.DefaultApi()
-
 	const now = moment().unix()
 	const hour = moment().subtract(1, "hours").unix()
 	const day = moment().subtract(1, "days").unix()
@@ -84,7 +83,7 @@ export default function BuySell ({navigation, route}) {
 	}, [])
 
 	const buy=async()=>{
-		console.log(user)
+		
 		const numberAmount=parseInt(amount)
 		const totalCost= numberAmount*price
 		if (balance>=totalCost){
@@ -98,8 +97,6 @@ export default function BuySell ({navigation, route}) {
 				balance:balance-totalCost
 			})
 		}
-		
-
 	}
 
 	const sell=async()=>{

@@ -135,7 +135,7 @@ export default function Navigation({navigation}) {
                   }}
                 />
                 <Tab.Screen
-                  name="port"
+                  name="Portfolio"
                   component={port}
                   options={{
                     tabBarIcon: ({focused}) => {
@@ -156,7 +156,7 @@ export default function Navigation({navigation}) {
                   }}
                 />
                 <Tab.Screen
-                  name="news"
+                  name="News"
                   component={news}
                   options={{
                     tabBarIcon: ({focused}) => {
@@ -177,7 +177,7 @@ export default function Navigation({navigation}) {
                   }}
                 />
                 <Tab.Screen
-                  name="profile"
+                  name="Profile"
                   component={profile}
                   options={{
                     tabBarIcon: ({focused}) => {
