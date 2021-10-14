@@ -7,7 +7,7 @@
 //
 
 import React, {useState,useContext} from "react"
-import { Image, StyleSheet, Text, View, Button, Alert, TextInput, TouchableOpacity} from "react-native"
+import { Image, StyleSheet, Text, View, Button, Alert, TextInput, TouchableOpacity, Pressable} from "react-native"
 import { AuthContext } from "../../context/AuthProvider"
 import firebase from "firebase"
 import { Directions } from "react-native-gesture-handler";
@@ -35,6 +35,7 @@ export default function BuySell ({navigation, route}) {
 	const [dayData, setDayData] = useState([])
 	const [monthData, setMonthData] = useState([])
 	const [yearData, setYearData] = useState([])
+	const [chartReady, setChart] = useState(true)
 	const {user,balance,stocks}=useContext(AuthContext)
 
 	const finnhub = require('finnhub');
@@ -132,7 +133,7 @@ export default function BuySell ({navigation, route}) {
 			</Text>	
 		</View>
 		<View>
-			{ yearData ? (
+			{ (yearData && chartReady) ? (
 			<Chart 
 			hourData = {hourData}
 			dayData = {dayData}
@@ -142,7 +143,8 @@ export default function BuySell ({navigation, route}) {
 			/>) : null
 			}
 		</View>
-		<View style = {styles.input}>
+
+		<View styles = {styles.input}>
 			<Text>
 				Enter amount to buy/sell:	
 			</Text>
