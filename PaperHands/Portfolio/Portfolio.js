@@ -10,7 +10,7 @@ import React,{useEffect,useContext,useState} from "react"
 import { Image, StyleSheet, Text, View,FlatList } from "react-native"
 import { AuthContext } from "../../context/AuthProvider"
 
-
+ 
 function Portfolio(){
 	const {user,stocks,balance}=useContext(AuthContext)
 	const [value,setValue]=useState(balance)
@@ -18,22 +18,17 @@ function Portfolio(){
 	const api_key = finnhub.ApiClient.instance.authentications['api_key'];
 	api_key.apiKey = "c54gglaad3ifdcrdm7u0"
 	const finnhubClient = new finnhub.DefaultApi()
+	
 
-	const getPrice=()=>{
-
-	}
-
-	useEffect(() => {
+	useEffect(() => { 
+		var thing=balance
 		const keys=Object.keys(stocks)
-		keys.forEach(key=>{
-			finnhubClient.quote(key, (error, data, response) => {
-				console.log(key)
-				const updatedPrice = (data.c*stocks[key])+value
-				console.log(updatedPrice)
-				setValue(updatedPrice) 
+		keys.forEach(async(key)=>{
+			 finnhubClient.quote(key, (error, data, response) => {
+				thing+=data.c*stocks[key]
+				setValue(thing) 
 			})
-		})
-		
+		})   
 	}, [])
 
 	return(

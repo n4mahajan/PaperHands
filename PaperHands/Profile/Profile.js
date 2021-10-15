@@ -15,11 +15,6 @@ import SearchBar from "../../components/SearchBar"
 
 export default function Profile () {
 	const {user,balance,stocks}= useContext(AuthContext)
-	
-
-	
-
-	
 
 
 	return (

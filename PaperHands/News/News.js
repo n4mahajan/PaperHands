@@ -6,8 +6,8 @@
 //  Copyright © 2018 [Company]. All rights reserved.
 //
 
-import React,{useEffect,useState} from "react"
-import { Image, StyleSheet, Text, View,ScrollView } from "react-native"
+import React,{useEffect,useState,useCallback} from "react"
+import { Image, StyleSheet, Text, View,ScrollView,Linking,Button } from "react-native"
 import axios from 'axios'
 
 
@@ -30,6 +30,23 @@ export default function News (){
 		fetchData()
 		console.log('here')
 	  },[])
+
+	  const OpenURLButton = ({ url, children }) => {
+		const handlePress = useCallback(async () => {
+		  // Checking if the link is supported for links with custom URL scheme.
+		  const supported = await Linking.canOpenURL(url);
+	  
+		  if (supported) {
+			// Opening the link with some app, if the URL scheme is "http" the web link should be opened
+			// by some browser in the mobile
+			await Linking.openURL(url);
+		  } else {
+			Alert.alert(`Don't know how to open this URL: ${url}`);
+		  }
+		}, [url]);
+	  
+		return <Button title={children} onPress={handlePress} />;
+	  };
 	
 	return (
 		<ScrollView>
@@ -38,7 +55,7 @@ export default function News (){
           	<Text>{result.headline}</Text>
           	<Text>{result.summary}</Text>
           <Image style={styles.tinyLogo} source={{uri:result.image}}/>
-         <Text>Visit article:{result.url}</Text>
+		 <OpenURLButton url={result.url}>Visit Article</OpenURLButton>
 		 	</View>
         ))}
 		</ScrollView>
