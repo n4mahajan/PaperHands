@@ -7,7 +7,8 @@
 //
 
 import React, {useState,useContext} from "react"
-import { Image, StyleSheet, Text, View, Button, Alert, TextInput, TouchableOpacity, Pressable} from "react-native"
+import { Image, StyleSheet, Text, View, Button, Alert, TextInput, TouchableOpacity,
+	TouchableWithoutFeedback,Keyboard} from "react-native"
 import { AuthContext } from "../../context/AuthProvider"
 import firebase from "firebase"
 import { Directions } from "react-native-gesture-handler";
@@ -97,32 +98,33 @@ export default function BuySell ({navigation, route}) {
 	}
 
 	return (
+		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 	<View style = {{
 		flex: 1,
 		background: "blue",
 	}}>
+		
+		
 		<View style = {styles.priceContainer}>
 			<Text >
 				{symbol} Price: ${price}
 			</Text>	
 		</View>
 		<View>
-			{ (yearData && chartReady) ? (
 			<Chart 
-			hourData = {hourData}
-			dayData = {dayData}
-			monthData = {monthData}
-			yearData = {yearData}
-			symbol = {symbol}
-			/>) : null
-			}
+				hourData = {hourData}
+				dayData = {dayData}
+				monthData = {monthData}
+				yearData = {yearData}
+				symbol = {symbol}
+			/>
 		</View>
-
+		
 		<View style = {styles.input}>
 			<Text>
 				Enter amount of shares:	
 			</Text>
-			<TextInput placeholder="Amount" onChangeText={setAmount} keyboardType="numeric"/>
+			<TextInput placeholder="Amount" onChangeText={setAmount} style={styles.textInput} keyboardType="numeric"/>
 		</View>
 		<View style = {{
 			flex: 1,
@@ -151,10 +153,15 @@ export default function BuySell ({navigation, route}) {
 				<Text style={styles.buttonText}> Sell</Text>
 			</View>
 		</TouchableOpacity>
+		
+		
 
 		</View>
 		
+		
+		
 	</View>
+	</TouchableWithoutFeedback>
 	)
 }
 
@@ -169,6 +176,7 @@ const styles = StyleSheet.create( {
 		flex: 1,
 		alignItems: "center",
 		justifyContent: "center",
+		marginBottom: 48
 	},
 	button: {
 		borderRadius: 8,
@@ -185,4 +193,17 @@ const styles = StyleSheet.create( {
 		fontSize: 16,
 		textAlign: 'center'
 	},
+	textInput: {
+		height: 40,
+		borderColor: "#000000",
+		borderBottomWidth: 1,
+		marginBottom: 36
+	  },
+	  inner: {
+		padding: 24,
+		flex: 1,
+		justifyContent: "space-around"
+	  },
+	  
+	  
 });
