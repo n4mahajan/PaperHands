@@ -208,7 +208,8 @@ const styles = StyleSheet.create( {
 		flex: 1,
 		alignItems: "center",
 		justifyContent: "center",
-		marginBottom: 48
+		marginBottom: "5%",
+		marginTop: "15%"
 	},
 	button: {
 		borderRadius: 8,
