@@ -55,18 +55,26 @@ export default function BuySell ({navigation, route}) {
 		async function getData() {
 			await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=1&from=${hour}&to=${now}&token=c54gglaad3ifdcrdm7u0`).then((response) => {
 				setHourData(generateData(response.data.t, response.data.c))
+			}).catch(err => {
+				console.log(err)
 			})
 			
 			await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=60&from=${day}&to=${now}&token=c54gglaad3ifdcrdm7u0`).then((response) => {
 				setDayData(generateData(response.data.t, response.data.c))
+			}).catch(err => {
+				console.log(err)
 			})
 
 			await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=D&from=${month}&to=${now}&token=c54gglaad3ifdcrdm7u0`).then((response) => {
 				setMonthData(generateData(response.data.t, response.data.c))
+			}).catch(err => {
+				console.log(err)
 			})
 
 			await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=W&from=${year}&to=${now}&token=c54gglaad3ifdcrdm7u0`).then((response) => {
 				setYearData(generateData(response.data.t, response.data.c))
+			}).catch(err => {
+				console.log(err)
 			})
 		}
 		getData()
