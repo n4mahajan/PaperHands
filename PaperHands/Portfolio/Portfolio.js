@@ -26,7 +26,7 @@ function Portfolio(){
 		keys.forEach(async(key)=>{
 			 finnhubClient.quote(key, (error, data, response) => {
 				thing+=data.c*stocks[key]
-				setValue(thing) 
+				setValue(thing.toFixed(2)) 
 			})
 		})   
 	}, [])
@@ -37,7 +37,7 @@ function Portfolio(){
 			<Text>The total value of your portfolio is {value}</Text>
 			<Text>Your Stocks</Text>
 			<FlatList data={Object.keys(stocks)} renderItem={({item})=>(
-				<Text>{item}:{stocks[item]}</Text>
+				<Text>{item}: {stocks[item]}</Text>
 			)}/>
 		</View>
 

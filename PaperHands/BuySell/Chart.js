@@ -12,7 +12,7 @@ const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
 	  const [data, setData] = useState()
     let previous = null
     const [activeLabel, setActiveLabel] = useState("Hour");
-
+    
     useEffect(() => {
       if (hourData !== previous) {
         previous = hourData
