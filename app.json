@@ -3,6 +3,7 @@
     "name": "PaperHands",
     "slug": "PaperHands",
     "version": "1.0.0",
+    "owner": "n4mahajan",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {

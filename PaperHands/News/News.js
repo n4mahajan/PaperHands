@@ -50,6 +50,7 @@ export default function News (){
 	
 	return (
 		<ScrollView>
+			<Text style={{fontSize: 22, marginBottom: "5%"}}>Financial News Provided by Finnhub:</Text>
 			{articles.map((result,key)=>(
             <View>
           	<Text>{result.headline}</Text>

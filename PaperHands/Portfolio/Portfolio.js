@@ -13,7 +13,7 @@ import { AuthContext } from "../../context/AuthProvider"
  
 function Portfolio(){
 	const {user,stocks,balance}=useContext(AuthContext)
-	const [value,setValue]=useState(balance)
+	const [value,setValue]=useState(balance.toFixed(2))
 	const finnhub = require('finnhub');
 	const api_key = finnhub.ApiClient.instance.authentications['api_key'];
 	api_key.apiKey = "c54gglaad3ifdcrdm7u0"
@@ -26,7 +26,7 @@ function Portfolio(){
 		keys.forEach(async(key)=>{
 			 finnhubClient.quote(key, (error, data, response) => {
 				thing+=data.c*stocks[key]
-				setValue(thing.toFixed(2)) 
+				setValue(thing) 
 			})
 		})   
 	}, [])
