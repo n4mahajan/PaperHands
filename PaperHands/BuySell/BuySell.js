@@ -155,7 +155,10 @@ export default function BuySell ({navigation, route}) {
 		<TouchableOpacity 			
 			onPress={() => 
 			Alert.alert("Are you sure you want to buy?", "", [
-				{text: "Confirm", onPress: () => buy()},
+				{text: "Confirm", onPress: () => {
+					buy()
+					navigation.goBack()
+				}},
 				{text: "Deny", onPress: () => console.log("Transaction Voided")},
 			])}   >
 			<View style={styles.button}>
@@ -166,7 +169,10 @@ export default function BuySell ({navigation, route}) {
 		<TouchableOpacity 			
 			onPress={() => 
 			Alert.alert("Are you sure you want to sell?", "", [
-				{text: "Confirm", onPress: () => sell()},
+				{text: "Confirm", onPress: () => {
+					sell()
+					navigation.goBack()
+				}},
 				{text: "Deny", onPress: () => console.log("Transaction Voided")},
 			])}   >
 			<View style={styles.button}>
