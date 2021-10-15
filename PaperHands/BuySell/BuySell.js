@@ -16,6 +16,7 @@ import { useEffect } from "react/cjs/react.development";
 import axios from "axios";
 import Chart from "./Chart";
 import moment from "moment";
+import {useNavigation} from '@react-navigation/native';
 
 export default function BuySell ({navigation, route}) {
 	const generateData = (xValues, yValues) => {
@@ -37,6 +38,7 @@ export default function BuySell ({navigation, route}) {
 	const [yearData, setYearData] = useState([])
 	const [chartReady, setChart] = useState(true)
 	const {user,balance,stocks}=useContext(AuthContext)
+	const pulledNavigation = useNavigation();
 
 	const finnhub = require('finnhub');
 
@@ -69,6 +71,13 @@ export default function BuySell ({navigation, route}) {
 		}
 		getData()
 	}, [])
+
+	useEffect(()=>{
+		pulledNavigation.setOptions({
+			title: symbol,
+			headerTitleStyle: {marginRight: 56, marginLeft: 56},
+		  });
+	},[])
 
 	useEffect(() => {
 		finnhubClient.quote(symbol, (error, data, response) => {

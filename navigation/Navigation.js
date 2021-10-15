@@ -37,9 +37,13 @@ const ProfileStack=createStackNavigator()
 
 const home = ({navigation}) => {
   return (
-    <HomeStack.Navigator>
+    <HomeStack.Navigator
+    screenOptions={{
+      headerBackTitleVisible:false,
+      headerTintColor:'black'
+    }}>
       <HomeStack.Screen
-        name="Inner Home"
+        name="Home"
         component={Home}
       />
       <HomeStack.Screen
