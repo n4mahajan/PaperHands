@@ -11,6 +11,12 @@ import moment from "moment";
 const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
 	  const [data, setData] = useState(hourData)
 
+    const [activeLabel, setActiveLabel] = useState("Hour");
+
+    useEffect(() => {
+      setData(hourData)
+    , [hourData]})
+
     const graphs = [
       {
         label: "1H",
@@ -93,32 +99,42 @@ const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
             <ChartDot style={{ backgroundColor: 'black' }} />
           </View>
         <View style = {styles.buttonContainer}>
-          <TouchableOpacity 			
-          onPress={() => 
-            setData(hourData)}>
-            <View style={styles.button}>
+          <TouchableOpacity	
+          style={[activeLabel === "Hour" && styles.activeGraphLabel]}
+          onPress={() => {
+            setData(hourData)
+            setActiveLabel("Hour")}}>
+            <View>
               <Text style={styles.buttonText}> {graphs[0].label}</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity 		
-          onPress={() => 
-            setData(dayData)}>
-            <View style={styles.button}>
-            <Text style={styles.buttonText}> {graphs[1].label}</Text>
+          <TouchableOpacity
+          style={[activeLabel === "Day" && styles.activeGraphLabel]}
+          onPress={() => {
+            setData(dayData)
+            setActiveLabel("Day")}}>
+            <View>
+              <Text style={styles.buttonText}> {graphs[1].label}</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity 			
-          onPress={() => 
-            setData(monthData)}>
-            <View style={styles.button}>
-            <Text style={styles.buttonText}> {graphs[2].label}</Text>
+          <TouchableOpacity
+          style={[activeLabel === "Month" && styles.activeGraphLabel]}
+          onPress={() => {
+            setData(monthData)
+            setActiveLabel("Month")
+          }}>
+            <View>
+              <Text style={styles.buttonText}> {graphs[2].label}</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity 			
-          onPress={() => 
-            setData(yearData)}>
-            <View style={styles.button}>
-            <Text style={styles.buttonText}> {graphs[3].label}</Text>
+          <TouchableOpacity
+          style={[activeLabel === "Year" && styles.activeGraphLabel]}
+          onPress={() => {
+            setData(yearData)
+            setActiveLabel("Year")
+          }}>
+            <View>
+              <Text style={styles.buttonText}> {graphs[3].label}</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -171,7 +187,18 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: "space-around",
+      width: "90%",
+      alignSelf: "center"
     },
+    activeGraphLabel: {
+      backgroundColor: '#bcbcbc',
+      borderRadius: 5,
+      width: "10%",
+      height: "120%"
+    },
+    buttonText: {
+      alignSelf: "center"
+    }
   });
 
 export default Chart
