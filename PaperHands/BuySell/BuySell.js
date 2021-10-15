@@ -50,18 +50,21 @@ export default function BuySell ({navigation, route}) {
 
 	useEffect(() => {
 		async function getData() {
-			await finnhubClient.stockCandles(symbol, 1, hour, now, (error, data, response) => {
-				setHourData(generateData(data.t, data.c))
-			});
-			await finnhubClient.stockCandles(symbol, 60, day, now, (error, data, response) => {
-				setDayData(generateData(data.t, data.c))
-			});
-			await finnhubClient.stockCandles(symbol, "D", month, now, (error, data, response) => {
-				setMonthData(generateData(data.t, data.c))
-			});
-			await finnhubClient.stockCandles(symbol, "W", year, now, (error, data, response) => {
-				setYearData(generateData(data.t, data.c))
-			});
+			await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=1&from=${hour}&to=${now}&token=c54gglaad3ifdcrdm7u0`).then((response) => {
+				setHourData(generateData(response.data.t, response.data.c))
+			})
+			
+			await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=60&from=${day}&to=${now}&token=c54gglaad3ifdcrdm7u0`).then((response) => {
+				setDayData(generateData(response.data.t, response.data.c))
+			})
+
+			await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=D&from=${month}&to=${now}&token=c54gglaad3ifdcrdm7u0`).then((response) => {
+				setMonthData(generateData(response.data.t, response.data.c))
+			})
+
+			await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=W&from=${year}&to=${now}&token=c54gglaad3ifdcrdm7u0`).then((response) => {
+				setYearData(generateData(response.data.t, response.data.c))
+			})
 		}
 
 		getData()
@@ -136,15 +139,13 @@ export default function BuySell ({navigation, route}) {
 			</Text>	
 		</View>
 		<View>
-			{ yearData ? (
 			<Chart 
-			hourData = {hourData}
-			dayData = {dayData}
-			monthData = {monthData}
-			yearData = {yearData}
-			symbol = {symbol}
-			/>) : null
-			}
+				hourData = {hourData}
+				dayData = {dayData}
+				monthData = {monthData}
+				yearData = {yearData}
+				symbol = {symbol}
+			/>
 		</View>
 		<View style = {styles.input}>
 			<Text>
