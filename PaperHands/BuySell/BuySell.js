@@ -18,7 +18,6 @@ import Chart from "./Chart";
 import moment from "moment";
 
 export default function BuySell ({navigation, route}) {
-
 	const generateData = (xValues, yValues) => {
 		const currentData = []
 		for (var i = 0; i < yValues.length; i++){
@@ -49,6 +48,27 @@ export default function BuySell ({navigation, route}) {
 	const day = moment().subtract(1, "days").unix()
 	const month = moment().subtract(1, "months").unix()
 	const year = moment().subtract(1, "years").unix()
+
+	useEffect(() => {
+		async function getData() {
+			await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=1&from=${hour}&to=${now}&token=c54gglaad3ifdcrdm7u0`).then((response) => {
+				setHourData(generateData(response.data.t, response.data.c))
+			})
+			
+			await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=60&from=${day}&to=${now}&token=c54gglaad3ifdcrdm7u0`).then((response) => {
+				setDayData(generateData(response.data.t, response.data.c))
+			})
+
+			await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=D&from=${month}&to=${now}&token=c54gglaad3ifdcrdm7u0`).then((response) => {
+				setMonthData(generateData(response.data.t, response.data.c))
+			})
+
+			await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=W&from=${year}&to=${now}&token=c54gglaad3ifdcrdm7u0`).then((response) => {
+				setYearData(generateData(response.data.t, response.data.c))
+			})
+		}
+		getData()
+	}, [])
 
 	useEffect(() => {
 		finnhubClient.quote(symbol, (error, data, response) => {

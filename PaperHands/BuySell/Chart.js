@@ -9,10 +9,17 @@ import moment from "moment";
 
 
 const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
-	  const [data, setData] = useState(hourData)
+	  const [data, setData] = useState()
+    let previous = null
     const [activeLabel, setActiveLabel] = useState("Hour");
 
-    
+    useEffect(() => {
+      if (hourData !== previous) {
+        previous = hourData
+        setData(hourData)
+      }
+    }, [hourData])
+
     const graphs = [
       {
         label: "1H",
@@ -75,7 +82,7 @@ const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
     };
 
     return (
-        <ChartPathProvider data={{ points:data, smoothingStrategy: 'bezier' }}>
+        <ChartPathProvider data={{ points: data, smoothingStrategy: 'bezier' }}>
           <View style={styles.lowerTitles}>
             <ChartYLabel
               format={formatUSD}
