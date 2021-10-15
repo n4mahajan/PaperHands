@@ -103,7 +103,7 @@ const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
           </View>
         <View style = {styles.buttonContainer}>
           <TouchableOpacity	
-          style={[activeLabel === "Hour" && styles.activeGraphLabel]}
+          style={[styles.buttonLabel, activeLabel === "Hour" && styles.activeGraphLabel]}
           onPress={() => {
             setData(hourData)
             setActiveLabel("Hour")}}>
@@ -112,7 +112,7 @@ const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-          style={[activeLabel === "Day" && styles.activeGraphLabel]}
+          style={[styles.buttonLabel, activeLabel === "Day" && styles.activeGraphLabel]}
           onPress={() => {
             setData(dayData)
             setActiveLabel("Day")}}>
@@ -121,7 +121,7 @@ const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-          style={[activeLabel === "Month" && styles.activeGraphLabel]}
+          style={[styles.buttonLabel, activeLabel === "Month" && styles.activeGraphLabel]}
           onPress={() => {
             setData(monthData)
             setActiveLabel("Month")
@@ -131,7 +131,7 @@ const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-          style={[activeLabel === "Year" && styles.activeGraphLabel]}
+          style={[styles.buttonLabel, activeLabel === "Year" && styles.activeGraphLabel]}
           onPress={() => {
             setData(yearData)
             setActiveLabel("Year")
@@ -191,16 +191,19 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: "space-around",
       width: "90%",
-      alignSelf: "center"
+      alignSelf: "center",
+      top: "5%"
     },
     activeGraphLabel: {
       backgroundColor: '#bcbcbc',
-      borderRadius: 5,
-      width: "10%",
-      height: "120%"
+      borderRadius: 5
     },
     buttonText: {
       alignSelf: "center"
+    },
+    buttonLabel: {
+      height: "130%",
+      width: "12%"
     }
   });
 

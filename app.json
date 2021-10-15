@@ -23,7 +23,9 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.PaperHands",
+      "versionCode": 3
     },
     "web": {
       "favicon": "./assets/images/favicon.png"

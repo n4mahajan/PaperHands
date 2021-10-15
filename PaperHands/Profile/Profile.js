@@ -20,11 +20,7 @@ export default function Profile () {
 	return (
 		<View>
 			<Text>Hello user {user.name}</Text>
-			<Text>Your balance is {balance}</Text>
-			<Text>Your Stocks</Text>
-			<FlatList data={Object.keys(stocks)} renderItem={({item})=>(
-				<Text>{item}:{stocks[item]}</Text>
-			)}/>
+			<Text>Your balance is {balance.toFixed(2)}</Text>
 			<Button title="sign out" onPress={()=>{
 				firebase.auth().signOut()
 			}}/>

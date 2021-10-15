@@ -7,7 +7,7 @@
 //
 
 import React,{useState,useContext} from "react"
-import { Image, StyleSheet, Text, TextInput, View, Button, TouchableHighlight, Alert} from "react-native"
+import { Image, StyleSheet, Text, TextInput, View, Button, TouchableHighlight, Alert, KeyboardAvoidingView} from "react-native"
 import firebase from "firebase"
 import { AuthContext } from "../../context/AuthProvider"
 
@@ -35,7 +35,8 @@ export default function SignUp({navigation}) {
 	// Trying to get this to work for the keyboard input
 	// https://medium.com/@nickyang0501/keyboardavoidingview-not-working-properly-c413c0a200d4
 	return (
-		<View
+		<KeyboardAvoidingView
+			behavior={Platform.OS === "ios" ? "padding" : "height"}
 			style={styles.signUpView}>
 			<View
 				pointerEvents="box-none"
@@ -77,7 +78,7 @@ export default function SignUp({navigation}) {
 					</View>
 				</View>
 			</View>
-		</View>
+		</KeyboardAvoidingView>
 	)
 	
 }
