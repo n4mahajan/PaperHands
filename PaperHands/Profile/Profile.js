@@ -33,7 +33,7 @@ export default function Profile () {
 			<Button title="sign out" onPress={()=>{
 				firebase.auth().signOut()
 			}}/>
-			<SearchBar/>
+			
 		</View>
 	)
 }
