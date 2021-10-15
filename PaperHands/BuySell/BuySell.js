@@ -50,36 +50,6 @@ export default function BuySell ({navigation, route}) {
 	const year = moment().subtract(1, "years").unix()
 
 	useEffect(() => {
-		async function getData() {
-			await finnhubClient.stockCandles(symbol, 1, hour, now, (error, data, response) => {
-				setHourData(generateData(data.t, data.c))
-			});
-			await finnhubClient.stockCandles(symbol, 60, day, now, (error, data, response) => {
-				setDayData(generateData(data.t, data.c))
-			});
-			await finnhubClient.stockCandles(symbol, "D", month, now, (error, data, response) => {
-				setMonthData(generateData(data.t, data.c))
-			});
-			await finnhubClient.stockCandles(symbol, "W", year, now, (error, data, response) => {
-				setYearData(generateData(data.t, data.c))
-			});
-		}
-
-		getData()
-	}, [])
-
-	// useEffect(()=>{
-	// 	async function fetchData() {
-	// 		const pricing = await axios.get(`https://finnhub.io/api/v1/stock/candle?token=btnth1n48v6p0j27i8k0&symbol=${symbol}&resolution=D&from=${hour}&to=${now}`)
-	// 		const info = await pricing.data
-	// 		console.log(info)
-	// 		setYAxis(info.c) 
-	// 		setXAxis(info.t)
-	// 	}
-	// 	fetchData()
-	// }, [])
-
-	useEffect(() => {
 		finnhubClient.quote(symbol, (error, data, response) => {
 			// console.log(data)
 			const updatedPrice = data.c
@@ -148,7 +118,7 @@ export default function BuySell ({navigation, route}) {
 			}
 		</View>
 
-		<View styles = {styles.input}>
+		<View style = {styles.input}>
 			<Text>
 				Enter amount of shares:	
 			</Text>

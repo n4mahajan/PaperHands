@@ -10,6 +10,8 @@ import moment from "moment";
 
 const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
 	  const [data, setData] = useState(hourData)
+    const [activeLabel, setActiveLabel] = useState("Hour");
+
     
     const graphs = [
       {
