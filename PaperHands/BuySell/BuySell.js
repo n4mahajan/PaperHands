@@ -6,13 +6,12 @@
 //  Copyright © 2018 [Company]. All rights reserved.
 //
 
-import React, {useState,useContext} from "react"
+import React, {useState,useContext, useEffect} from "react"
 import { Image, StyleSheet, Text, View, Button, Alert, TextInput, TouchableOpacity,
 	TouchableWithoutFeedback,Keyboard} from "react-native"
 import { AuthContext } from "../../context/AuthProvider"
 import firebase from "firebase"
 import { Directions } from "react-native-gesture-handler";
-import { useEffect } from "react/cjs/react.development";
 import axios from "axios";
 import Chart from "./Chart";
 import moment from "moment";
