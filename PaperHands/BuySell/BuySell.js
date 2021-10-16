@@ -51,6 +51,17 @@ export default function BuySell ({navigation, route}) {
 	const year = moment().subtract(1, "years").unix()
 
 	useEffect(() => {
+		pulledNavigation.setOptions({
+			title: symbol,
+			headerTitleStyle: {marginRight: 56, marginLeft: 56},
+		  });
+
+		finnhubClient.quote(symbol, (error, data, response) => {
+			// console.log(data)
+			const updatedPrice = data.c
+			setPrice(updatedPrice)
+		})
+
 		async function getData() {
 			await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=1&from=${hour}&to=${now}&token=c54gglaad3ifdcrdm7u0`).then((response) => {
 				setHourData(generateData(response.data.t, response.data.c))
@@ -75,21 +86,6 @@ export default function BuySell ({navigation, route}) {
 			})
 		}
 		getData()
-	}, [])
-
-	useEffect(()=>{
-		pulledNavigation.setOptions({
-			title: symbol,
-			headerTitleStyle: {marginRight: 56, marginLeft: 56},
-		  });
-	},[])
-
-	useEffect(() => {
-		finnhubClient.quote(symbol, (error, data, response) => {
-			// console.log(data)
-			const updatedPrice = data.c
-			setPrice(updatedPrice)
-		})
 	}, [])
 
 	const buy=async()=>{
