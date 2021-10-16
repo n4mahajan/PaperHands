@@ -2,8 +2,7 @@ import React from 'react'
 import {View, Text, Dimensions, StyleSheet, TouchableOpacity} from 'react-native'
 import {ChartDot, ChartPath, ChartPathProvider, ChartYLabel, ChartXLabel} from '@rainbow-me/animated-charts';
 export const {width: SIZE} = Dimensions.get('window');
-import {useState,useContext} from "react"
-import { useEffect } from 'react/cjs/react.development';
+import {useState, useEffect, useContext} from "react"
 import { block } from 'react-native-reanimated';
 import moment from "moment";
 
