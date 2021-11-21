@@ -7,9 +7,9 @@
 //
 
 import React,{useEffect,useState,useCallback} from "react"
-import { Image, StyleSheet, Text, View,ScrollView,Linking,Button } from "react-native"
+import { Image, StyleSheet, Text, View,ScrollView,Linking,Button, TouchableOpacity } from "react-native"
 import axios from 'axios'
-
+import Icon from 'react-native-vector-icons/Feather';
 
 
 export default function News (){
@@ -22,13 +22,13 @@ export default function News (){
 				"https://finnhub.io/api/v1/news?category=general&token=c54gglaad3ifdcrdm7u0"
 			);
 			const results = await response.data
-			const shorten = results.slice(0,20)
+			// Exclude Bloomberg articles as they tend to be unrelated to business/stock information
+			const shorten = results.filter(item => item.source !== "Bloomberg")
 			setArticles(shorten)
 			setLoading(false)
 		}
 		
 		fetchData()
-		console.log('here')
 	  },[])
 
 	  const OpenURLButton = ({ url, children }) => {
@@ -45,18 +45,31 @@ export default function News (){
 		  }
 		}, [url]);
 	  
-		return <Button title={children} onPress={handlePress} />;
+		return <TouchableOpacity style={{position: "absolute", bottom: 0, right: 0}} onPress={handlePress}>
+					<Icon name="corner-up-right" size="25%"></Icon>
+				</TouchableOpacity>
 	  };
-	
+
+	  function parseDate(date) {
+		  return date = new Date(date * 1000).toDateString()
+	  }
+
 	return (
-		<ScrollView>
-			<Text style={{fontSize: 22, marginBottom: "5%"}}>Financial News Provided by Finnhub:</Text>
+		<ScrollView style={{backgroundColor: "#ebebeb", marginTop: "5%"}}>
+			<Text style={{fontSize: 22, marginBottom: "5%", fontWeight: "bold", alignSelf: "center"}}>Financial News Provided by Finnhub:</Text>
 			{articles.map((result,key)=>(
-            <View>
-          	<Text>{result.headline}</Text>
-          	<Text>{result.summary}</Text>
-          <Image style={styles.tinyLogo} source={{uri:result.image}}/>
-		 <OpenURLButton url={result.url}>Visit Article</OpenURLButton>
+            <View style={styles.container}>
+				<View style={{justifyContent: "flex-start", alignItems: "flex-start", width: "35%"}}>
+					<Image style={styles.tinyLogo} source={{uri:result.image}}/>
+				</View>
+				<View style={{flex: 1, width: "65%", marginTop: "2%"}}>
+					<View style={{flexDirection: "row", justifyContent: "space-between"}}>
+						<Text style={{fontWeight: "bold", marginBottom: "3%", fontSize: 16}}>{result.source}</Text>
+						<Text style={{color: "#999999"}}>{parseDate(result.datetime)}</Text>
+					</View>
+					<Text style={{fontSize: 13}}>{result.headline}</Text>
+					<OpenURLButton url={result.url} >Visit Article</OpenURLButton>
+				</View>
 		 	</View>
         ))}
 		</ScrollView>
@@ -65,8 +78,19 @@ export default function News (){
 
 const styles = StyleSheet.create({
 	tinyLogo: {
-		aspectRatio: 1.5, 
-    	resizeMode: 'contain',
-		
+		width: "90%",
+		height: "100%"
 	  },
+	  container: {
+        width: "98%",
+        backgroundColor: "#FFFFFF",
+        borderColor: "gray",
+        flexDirection: "row",
+        justifyContent: "space-between",
+		marginBottom: "5%",
+		borderRadius: 5,
+		alignSelf: "center", 
+		flex: 1, 
+		minHeight: 150
+	},
 })
