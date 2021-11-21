@@ -16,7 +16,7 @@ export default function Login ({navigation}) {
 
 	const login=()=>{
 		firebase.auth().signInWithEmailAndPassword(username+'@gmail.com',password).then(()=>{
-			console.log('here')
+			console.log('her')
 		}).catch((error)=>{
 			Alert.alert("Login failed: your username and/or password was incorrect")
 		})

@@ -1,9 +1,9 @@
 import React,{useEffect,useState} from 'react'
-import {View,TextInput,FlatList,Text} from 'react-native'
+import {View,TextInput,FlatList,Text,StyleSheet,TouchableOpacity} from 'react-native'
 import axios from "axios"
 
 
-const SearchBar=()=>{
+const SearchBar=({navigation,setToggle})=>{
     const [search, setSearch]=useState('')
 	const [results, setResults]=useState([])
 
@@ -13,8 +13,14 @@ const SearchBar=()=>{
 			if (search.length > 0){
 				const response = await axios.get(`https://finnhub.io/api/v1/search?q=${search}&token=btnth1n48v6p0j27i8k0`)
 				const results = await response.data
-				console.log(results.result)
-				setResults(results.result.slice(0, 5))
+				const holder=[]
+				results.result.forEach(element => {
+					if(element.type=="Common Stock"){
+						holder.push(element)
+					}
+				});
+				console.log(holder)
+				setResults(holder.slice(0, 5))
 			}else{
 				setResults([])
 			}
@@ -25,13 +31,34 @@ const SearchBar=()=>{
 
     return(
         <View>
-				<TextInput placeholder="search stock" onChangeText={setSearch}/>
+				<TextInput style={styles.textinput} placeholder="Search" placeholderTextColor = "black" onChangeText={setSearch}/>
 				<FlatList data={results} renderItem={({item})=>(
-					<Text>{item.symbol}:{item.description}</Text>
+					<TouchableOpacity onPress={()=>{
+						setToggle(false)
+						navigation.push("BuySell", {symbol: item.symbol})
+						
+					}}>
+						<Text style={styles.text}>{item.symbol}:{item.description}</Text>
+					</TouchableOpacity>
 
 				)}/>
 		</View> 
     )
 }
+
+const styles=StyleSheet.create({
+	textinput:{
+		height: 40,
+    	margin: 12,
+    	borderWidth: 1,
+    	padding: 10,
+		borderRadius:25,
+		color:'black'
+		
+	},
+	text:{
+		fontSize:20
+	}
+})
 
 export default SearchBar

@@ -22,10 +22,10 @@ export default function SignUp({navigation}) {
 
 	const createUser=async()=>{
 		let newUser=await firebase.auth().createUserWithEmailAndPassword(username+'@gmail.com',password).catch((error)=>{
-			Alert.alert("There was an error while creaitng your account")
+			console.log(error.message)
 		})
 		firebase.firestore().collection('Users').doc(newUser.user.uid).set({
-				name,
+				name:username,
 				balance,
 				stocks:{}
 		})

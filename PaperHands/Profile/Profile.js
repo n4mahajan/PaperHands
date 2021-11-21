@@ -28,6 +28,9 @@ export default function Profile () {
 			<Button title="sign out" onPress={()=>{
 				firebase.auth().signOut()
 			}}/>
+			<Button title="test" onPress={()=>{
+				console.log(user.name)
+			}}/>
 			
 		</View>
 	)

@@ -15,6 +15,7 @@ const AuthProvider = ({children}) => {
     firebase.auth().onAuthStateChanged(async firebaseUser => {
       console.log('In firebase auth state change');
       if (firebaseUser) {
+        console.log('past if statement')
         let docRef = firebase
           .firestore()
           .collection('Users')
