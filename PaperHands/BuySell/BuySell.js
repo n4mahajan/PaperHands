@@ -6,13 +6,12 @@
 //  Copyright © 2018 [Company]. All rights reserved.
 //
 
-import React, {useState,useContext} from "react"
+import React, {useState, useEffect, useContext} from "react"
 import { Image, StyleSheet, Text, View, Button, Alert, TextInput, TouchableOpacity,
 	TouchableWithoutFeedback,Keyboard} from "react-native"
 import { AuthContext } from "../../context/AuthProvider"
 import firebase from "firebase"
 import { Directions } from "react-native-gesture-handler";
-import { useEffect } from "react/cjs/react.development";
 import axios from "axios";
 import Chart from "./Chart";
 import moment from "moment";
@@ -52,47 +51,43 @@ export default function BuySell ({navigation, route}) {
 	const year = moment().subtract(1, "years").unix()
 
 	useEffect(() => {
-		async function getData() {
-			await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=1&from=${hour}&to=${now}&token=c54gglaad3ifdcrdm7u0`).then((response) => {
-				setHourData(generateData(response.data.t, response.data.c))
-			}).catch(err => {
-				console.log(err)
-			})
-			
-			await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=60&from=${day}&to=${now}&token=c54gglaad3ifdcrdm7u0`).then((response) => {
-				setDayData(generateData(response.data.t, response.data.c))
-			}).catch(err => {
-				console.log(err)
-			})
-
-			await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=D&from=${month}&to=${now}&token=c54gglaad3ifdcrdm7u0`).then((response) => {
-				setMonthData(generateData(response.data.t, response.data.c))
-			}).catch(err => {
-				console.log(err)
-			})
-
-			await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=W&from=${year}&to=${now}&token=c54gglaad3ifdcrdm7u0`).then((response) => {
-				setYearData(generateData(response.data.t, response.data.c))
-			}).catch(err => {
-				console.log(err)
-			})
-		}
-		getData()
-	}, [])
-
-	useEffect(()=>{
 		pulledNavigation.setOptions({
 			title: symbol,
 			headerTitleStyle: {marginRight: 56, marginLeft: 56},
 		  });
-	},[])
 
-	useEffect(() => {
 		finnhubClient.quote(symbol, (error, data, response) => {
 			// console.log(data)
 			const updatedPrice = data.c
 			setPrice(updatedPrice)
-		})
+		});
+
+		async function getData() {
+			await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=1&from=${hour}&to=${now}&token=c54gglaad3ifdcrdm7u0`).then((response) => {
+				setHourData(generateData(response.data.t, response.data.c));
+			}).catch(err => {
+				console.log(err);
+			})
+			
+			await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=60&from=${day}&to=${now}&token=c54gglaad3ifdcrdm7u0`).then((response) => {
+				setDayData(generateData(response.data.t, response.data.c));
+			}).catch(err => {
+				console.log(err);
+			})
+
+			await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=D&from=${month}&to=${now}&token=c54gglaad3ifdcrdm7u0`).then((response) => {
+				setMonthData(generateData(response.data.t, response.data.c));
+			}).catch(err => {
+				console.log(err);
+			})
+
+			await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=W&from=${year}&to=${now}&token=c54gglaad3ifdcrdm7u0`).then((response) => {
+				setYearData(generateData(response.data.t, response.data.c));
+			}).catch(err => {
+				console.log(err);
+			})
+		}
+		getData()
 	}, [])
 
 	const buy=async()=>{

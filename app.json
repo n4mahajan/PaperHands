@@ -3,6 +3,7 @@
     "name": "PaperHands",
     "slug": "PaperHands",
     "version": "1.0.0",
+    "owner": "n4mahajan",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {
@@ -23,7 +24,9 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.PaperHands",
+      "versionCode": 3
     },
     "web": {
       "favicon": "./assets/images/favicon.png"

@@ -7,7 +7,7 @@
 //
 
 import React,{useState} from "react"
-import { Image, StyleSheet, Text, TextInput, View, Button, TouchableHighlight, Alert } from "react-native"
+import { Image, StyleSheet, Text, TextInput, View, Button, TouchableHighlight, Alert, KeyboardAvoidingView } from "react-native"
 import firebase from "firebase"
 
 export default function Login ({navigation}) {
@@ -24,7 +24,8 @@ export default function Login ({navigation}) {
 
 	
 	return (
-		<View
+		<KeyboardAvoidingView
+      		behavior={Platform.OS === "ios" ? "padding" : "height"}
 			style={styles.loginView}>
 			<View
 				pointerEvents="box-none"
@@ -67,7 +68,7 @@ export default function Login ({navigation}) {
 					
 				</View>
 			</View>
-		</View>
+		</KeyboardAvoidingView>
 	)
 	
 }
