@@ -36,7 +36,7 @@ export default function BuySell ({navigation, route}) {
 	const [monthData, setMonthData] = useState([])
 	const [yearData, setYearData] = useState([])
 	const [chartReady, setChart] = useState(true)
-	const {user,balance,stocks}=useContext(AuthContext)
+	const {user,balance,stocks, transactionHistory}=useContext(AuthContext)
 	const pulledNavigation = useNavigation();
 
 	const finnhub = require('finnhub');
@@ -100,9 +100,12 @@ export default function BuySell ({navigation, route}) {
 			}else{
 				stocks[symbol]=numberAmount
 			}
+			var newTransactionHistory = transactionHistory
+			newTransactionHistory.push({date: new Date(Date.now()).toLocaleString(), company: symbol, type: "Buy", value: totalCost, shares: numberAmount})
 			await firebase.firestore().collection("Users").doc(user.uid).update({
 				stocks:stocks,
-				balance:balance-totalCost
+				balance:balance-totalCost,
+				transactionHistory: newTransactionHistory
 			})
 		}
 	}
@@ -116,9 +119,12 @@ export default function BuySell ({navigation, route}) {
 				if (stocks[symbol]<=0){
 					delete stocks[symbol]
 				}
+				var newTransactionHistory = transactionHistory
+				newTransactionHistory.push({date: new Date(Date.now()).toLocaleString(), company: symbol, type: "Sell", value: totalGain, shares: numberAmount})
 				await firebase.firestore().collection("Users").doc(user.uid).update({
 					stocks:stocks,
-					balance:balance+totalGain
+					balance:balance+totalGain,
+					transactionHistory: newTransactionHistory
 				})
 			}else{
 				Alert.alert('You dont own enough of this stock')

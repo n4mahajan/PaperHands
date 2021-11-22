@@ -9,6 +9,7 @@ const AuthProvider = ({children}) => {
   const [user, setUser] = useState();
   const [balance,setBalance]=useState(null)
   const [stocks,setStocks]=useState(null)
+  const [transactionHistory, setTransactionHistory] = useState([])
 
 
   useEffect(() => {
@@ -46,6 +47,16 @@ const AuthProvider = ({children}) => {
         setStocks(b);
       });
 
+      firebase
+      .firestore()
+      .collection('Users')
+      .doc(firebaseUser.uid)
+      .onSnapshot(documentSnapshot => {
+        const b = documentSnapshot.data().transactionHistory;
+        console.log(b)
+        setTransactionHistory(b);
+      });
+
       }else{
           setUser(null)
       }
@@ -58,7 +69,8 @@ const AuthProvider = ({children}) => {
         user,
         setUser,
         balance,
-        stocks
+        stocks,
+        transactionHistory
       }}>
       {children}
     </AuthContext.Provider>

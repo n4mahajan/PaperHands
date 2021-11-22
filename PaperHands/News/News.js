@@ -46,7 +46,7 @@ export default function News (){
 		}, [url]);
 	  
 		return <TouchableOpacity style={{position: "absolute", bottom: 0, right: 0}} onPress={handlePress}>
-					<Icon name="corner-up-right" size="25"></Icon>
+					<Icon name="corner-up-right" size={25}></Icon>
 				</TouchableOpacity>
 	  };
 
@@ -64,10 +64,10 @@ export default function News (){
 				</View>
 				<View style={{flex: 1, width: "65%", marginTop: "2%"}}>
 					<View style={{flexDirection: "row", justifyContent: "space-between"}}>
-						<Text style={{fontWeight: "bold", marginBottom: "3%", fontSize: 16}}>{result.source}</Text>
+						<Text style={{fontWeight: "bold", marginBottom: "3%", fontSize: 16, width: "50%"}}>{result.headline}</Text>
 						<Text style={{color: "#999999"}}>{parseDate(result.datetime)}</Text>
 					</View>
-					<Text style={{fontSize: 13}}>{result.headline}</Text>
+					<Text style={{fontSize: 13, width: "80%"}}>{result.summary}</Text>
 					<OpenURLButton url={result.url} >Visit Article</OpenURLButton>
 				</View>
 		 	</View>
@@ -91,6 +91,5 @@ const styles = StyleSheet.create({
 		borderRadius: 5,
 		alignSelf: "center", 
 		flex: 1, 
-		minHeight: 150
 	},
 })

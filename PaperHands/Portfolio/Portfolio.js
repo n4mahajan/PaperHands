@@ -8,11 +8,11 @@
 
 import react from "react"
 import React,{useEffect,useContext,useState} from "react"
-import { Image, StyleSheet, Text, View,FlatList, TouchableHighlight } from "react-native"
+import { Image, StyleSheet, Text, View,FlatList, TouchableHighlight, ScrollView } from "react-native"
 import { AuthContext } from "../../context/AuthProvider"
 
  
-function Portfolio(){
+function Portfolio({navigation}){
 	const {user,stocks,balance}=useContext(AuthContext)
 	const [value,setValue]=useState(balance.toFixed(2))
 	const [prices, setPrices] = useState({})
@@ -44,14 +44,13 @@ function Portfolio(){
 	}, [])
 
 	stockOnClick = (stock) => {
-		alert(stock);
-		//props.navigation.push("BuySell", {symbol: stock})
+		navigation.push("BuySell", {symbol: stock[0]})
 	}
 
 	return(
-		<View style = {{marginBottom: 50}}>
+		<ScrollView style = {{marginBottom: 30}}>
 			<View style={styles.summary}>
-				<Text style = {{textAlign: 'center'}}> Portfolio value: {value}</Text>
+				<Text style = {{textAlign: 'center'}}> Portfolio value: ${value}</Text>
 			</View>
 			<View style ={styles.containerHeading}>
 				<Text style={styles.item}> Stock </Text>
@@ -67,13 +66,13 @@ function Portfolio(){
 							<View style={styles.container}>
 								<Text style = {styles.item}>{item} </Text>
 								<Text style = {styles.item}>{prices[item]}</Text>
-								<Text style = {styles.item}>   {stocks[item]} </Text>
+								<Text style = {styles.item}>{stocks[item]} </Text>
 								<Text style = {styles.totalValue}>{total[item]}</Text>
 							</View>
 						</TouchableHighlight>
 					</react.Fragment>
 				)}/>
-		</View>
+		</ScrollView>
 	) 
 }
 
@@ -84,7 +83,7 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 		paddingTop: 20,
 		paddingBottom: 20,
-		backgroundColor: '#68a0cf',
+		backgroundColor: '#00ffa9',
 		borderRadius: 10,
 		borderWidth: 1,
 		borderColor: '#fff',
@@ -95,7 +94,6 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-evenly',
 		alignItems: 'center',
 		paddingHorizontal: 20,
-		paddingBottom: 20,
 		paddingTop: 20,
 	},
 	container: {

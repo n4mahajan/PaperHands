@@ -61,6 +61,10 @@ const port = ({navigation}) => {
         name="Portfolio"
         component={Portfolio}
       />
+      <PortStack.Screen
+        name="BuySell"
+        component={BuySell}
+      />
     </PortStack.Navigator>
   );
 }

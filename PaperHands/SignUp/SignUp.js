@@ -27,7 +27,8 @@ export default function SignUp({navigation}) {
 		firebase.firestore().collection('Users').doc(newUser.user.uid).set({
 				name:username,
 				balance,
-				stocks:{}
+				stocks:{},
+				transactionHistory: new Array()
 		})
 			
 		
