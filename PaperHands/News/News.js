@@ -46,7 +46,7 @@ export default function News (){
 		}, [url]);
 	  
 		return <TouchableOpacity style={{position: "absolute", bottom: 0, right: 0}} onPress={handlePress}>
-					<Icon name="corner-up-right" size="25%"></Icon>
+					<Icon name="corner-up-right" size="25"></Icon>
 				</TouchableOpacity>
 	  };
 
@@ -58,7 +58,7 @@ export default function News (){
 		<ScrollView style={{backgroundColor: "#ebebeb", marginTop: "5%"}}>
 			<Text style={{fontSize: 22, marginBottom: "5%", fontWeight: "bold", alignSelf: "center"}}>Financial News Provided by Finnhub:</Text>
 			{articles.map((result,key)=>(
-            <View style={styles.container}>
+            <View style={styles.container} key={key}>
 				<View style={{justifyContent: "flex-start", alignItems: "flex-start", width: "35%"}}>
 					<Image style={styles.tinyLogo} source={{uri:result.image}}/>
 				</View>
