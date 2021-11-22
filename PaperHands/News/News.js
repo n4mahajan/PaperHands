@@ -79,7 +79,8 @@ export default function News (){
 const styles = StyleSheet.create({
 	tinyLogo: {
 		width: "90%",
-		height: "100%"
+		height: "100%",
+		resizeMode: "cover",
 	  },
 	  container: {
         width: "98%",
