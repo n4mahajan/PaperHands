@@ -28,7 +28,8 @@ export default function SignUp({navigation}) {
 				name:username,
 				balance,
 				stocks:{},
-				transactionHistory: new Array()
+				transactionHistory: new Array(),
+				lastBalance:balance
 		})
 			
 		

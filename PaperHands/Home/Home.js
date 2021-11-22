@@ -13,6 +13,8 @@ import axios from 'axios'
 import CompanyRowItem from "../Home/CompanyRowItem"
 import SearchBar from "../../components/SearchBar";
 import { Ionicons } from '@expo/vector-icons';
+import firebase from '../../firebase/firebase'
+import {AuthContext} from '../../context/AuthProvider'
 
 export default function Home({navigation}) {
 	const [search, setSearch] = useState('')
@@ -20,6 +22,7 @@ export default function Home({navigation}) {
 	const [loading,setLoading] = useState(true)
 	const nav = useNavigation();
 	const[toggle,setToggle]=useState(false)
+	const {user,stocks,balance}=useContext(AuthContext)
 
 	useEffect(() => {
 		async function fetchData() {
@@ -41,6 +44,8 @@ export default function Home({navigation}) {
 		
 	}, [])
 
+
+
 	useEffect(() => {
 		nav.setOptions({
 			headerRight: () => 
@@ -52,6 +57,26 @@ export default function Home({navigation}) {
 			
 		  });
 	},[])
+
+	useEffect(() => {
+		AppState.addEventListener('change', handleAppStateChange);
+	
+		return () => {
+		  AppState.removeEventListener('change', handleAppStateChange);
+		};
+	 }, []);
+	
+	const handleAppStateChange = (nextAppState) => {
+	  if (nextAppState === 'inactive') {
+		update()
+	  }    
+	}
+
+	const update=()=>{
+		firebase.firestore().collection('Users').doc(user.uid).update({
+			lastBalance:balance
+		})
+	}
 
 	if (loading === true) {
 		return (
@@ -76,6 +101,7 @@ export default function Home({navigation}) {
 					<SearchBar navigation={navigation} setToggle={setToggle}/>
 					</View>
 				</Modal>
+				<Text>Your balance has moved by {balance-user.lastBalance} since last time.</Text>
 				<FlatList data={results} keyExtractor={(item) => item.ticker} style={styles.rowItem} renderItem={({item})=>(
 					<CompanyRowItem symbol={item.ticker} description={item.companyName} price={Number(item.price).toFixed(2)} priceChange={Number(item.changes).toFixed(2)} 
 						percentChange={Number(item.changesPercentage).toFixed(2)} navigation={navigation}/>

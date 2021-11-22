@@ -25,7 +25,8 @@ const AuthProvider = ({children}) => {
         docRef.get().then(async doc => {
             setUser({
               name:doc.data().name,
-              uid:firebaseUser.uid
+              uid:firebaseUser.uid,
+              lastBalance:doc.data().lastBalance
             })
         });
 
