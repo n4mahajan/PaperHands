@@ -146,6 +146,7 @@ export default function BuySell ({navigation, route}) {
 		<View style = {styles.priceContainer}>
 			<Text >
 				{symbol} Price: ${price}
+				You own {stocks[0]} stocks
 			</Text>	
 		</View>
 		<View>

@@ -3,15 +3,19 @@ import {View, Text, Dimensions, StyleSheet, TouchableOpacity} from 'react-native
 import {ChartDot, ChartPath, ChartPathProvider, ChartYLabel, ChartXLabel} from '@rainbow-me/animated-charts';
 export const {width: SIZE} = Dimensions.get('window');
 import {useState, useEffect, useContext} from "react"
+import { AuthContext } from "../../context/AuthProvider"
 import { block } from 'react-native-reanimated';
 import moment from "moment";
 
 
 const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
+    const {stocks} = useContext(AuthContext)
 	  const [data, setData] = useState()
     let previous = null
     const [activeLabel, setActiveLabel] = useState("Hour");
     
+    console.log(stocks["AMC"])
+
     useEffect(() => {
       if (hourData !== previous) {
         previous = hourData
