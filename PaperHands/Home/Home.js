@@ -8,7 +8,7 @@
 
 import React, {useContext, useEffect, useState} from "react"
 import { useNavigation } from '@react-navigation/native';
-import {StyleSheet, Text, View, FlatList, ActivityIndicator,Button,Modal, TouchableOpacity} from "react-native"
+import {StyleSheet, Text, View, FlatList, ActivityIndicator,Button,Modal, TouchableOpacity, AppState} from "react-native"
 import axios from 'axios'
 import CompanyRowItem from "../Home/CompanyRowItem"
 import SearchBar from "../../components/SearchBar";
