@@ -29,7 +29,7 @@ export default function SignUp({navigation}) {
 				balance,
 				stocks:{},
 				transactionHistory: new Array(),
-				lastBalance:balance
+				lastPortfolioValue: 0
 		})
 			
 		

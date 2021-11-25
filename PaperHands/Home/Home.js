@@ -15,6 +15,7 @@ import SearchBar from "../../components/SearchBar";
 import { Ionicons } from '@expo/vector-icons';
 import firebase from '../../firebase/firebase'
 import {AuthContext} from '../../context/AuthProvider'
+import Icon from 'react-native-vector-icons/Feather';
 
 export default function Home({navigation}) {
 	const [search, setSearch] = useState('')
@@ -52,31 +53,14 @@ export default function Home({navigation}) {
 				<TouchableOpacity onPress={()=>{
 					setToggle(true)
 				}}>
-					<Text>Search</Text>
+					<View style={styles.searchBar}>
+						<Text style={{paddingRight: 20}}>Search...</Text>
+						<Icon name="search" size={16}/>
+					</View>
 				</TouchableOpacity>
 			
 		  });
 	},[])
-
-	useEffect(() => {
-		AppState.addEventListener('change', handleAppStateChange);
-	
-		return () => {
-		  AppState.removeEventListener('change', handleAppStateChange);
-		};
-	 }, []);
-	
-	const handleAppStateChange = (nextAppState) => {
-	  if (nextAppState === 'inactive') {
-		update()
-	  }    
-	}
-
-	const update=()=>{
-		firebase.firestore().collection('Users').doc(user.uid).update({
-			lastBalance:balance
-		})
-	}
 
 	if (loading === true) {
 		return (
@@ -101,7 +85,6 @@ export default function Home({navigation}) {
 					<SearchBar navigation={navigation} setToggle={setToggle}/>
 					</View>
 				</Modal>
-				<Text>Your balance has moved by {balance-user.lastBalance} since last time.</Text>
 				<FlatList data={results} keyExtractor={(item) => item.ticker} style={styles.rowItem} renderItem={({item})=>(
 					<CompanyRowItem symbol={item.ticker} description={item.companyName} price={Number(item.price).toFixed(2)} priceChange={Number(item.changes).toFixed(2)} 
 						percentChange={Number(item.changesPercentage).toFixed(2)} navigation={navigation}/>
@@ -130,5 +113,16 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		marginTop:'30%'
+	}, 
+	searchBar: {
+		flexDirection: "row", 
+		borderWidth: 1, 
+		marginRight: 15, 
+		alignItems: "center", 
+		justifyContent: "space-between", 
+		height: 25, 
+		width: 120, 
+		paddingLeft: 5, 
+		paddingRight: 5
 	}
 })

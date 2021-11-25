@@ -30,7 +30,7 @@ export default function CompanyRowItem(props) {
     // TODO: implement on click event for when company is clicked
     // to navigate to their buy/sell page
     function companyRowItemOnClick() {
-        props.navigation.push("BuySell", {symbol: symbol})
+        props.navigation.push("BuySell", {symbol: symbol, priceChange: priceChange})
     }
 
     // Likely need to make another API call to get the stock amounts for the given company
@@ -62,7 +62,8 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         paddingBottom: 10,
         flexDirection: "row",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        paddingLeft: 5
 	},
     symbol: {
         color: "gray",
