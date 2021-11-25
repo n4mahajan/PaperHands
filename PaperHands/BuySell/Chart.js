@@ -3,14 +3,16 @@ import {View, Text, Dimensions, StyleSheet, TouchableOpacity} from 'react-native
 import {ChartDot, ChartPath, ChartPathProvider, ChartYLabel, ChartXLabel} from '@rainbow-me/animated-charts';
 export const {width: SIZE} = Dimensions.get('window');
 import {useState, useEffect, useContext} from "react"
+import { AuthContext } from "../../context/AuthProvider"
 import { block } from 'react-native-reanimated';
 import moment from "moment";
 
 
 const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
+    const {stocks} = useContext(AuthContext)
 	  const [data, setData] = useState()
     let previous = null
-    const [activeLabel, setActiveLabel] = useState("Hour");
+    const [activeLabel, setActiveLabel] = useState();
     
     useEffect(() => {
       if (hourData !== previous) {
@@ -62,7 +64,8 @@ const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
       const d = date.getDate();
       const n = date.getMonth();
       const y = date.getFullYear();
-      return `${y}-${n}-${d}`;
+      const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+      return `${months[n]} ${d} ${y}`;
     };
 
     const formatTime = value => {
@@ -71,14 +74,34 @@ const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
         return '';
       }
       var val = parseInt(value);
-      const date = new Date(Number(val * 1000));
-      let m = date.getMinutes();
-      const h = date.getHours();
-      if (m < 10) {
-        return `${h}:0${m}`
+      var date = new Date(val * 1000);
+      // Hours part from the timestamp
+      var h = date.getHours();
+      // Minutes part from the timestamp
+      var m = "0" + date.getMinutes();
+      // Seconds part from the timestamp
+      var s = "0" + date.getSeconds();
+      // Will display time in 10:30:23 format
+      var formattedTime;
+      if (h < 12) {
+        formattedTime = h + ':' + m.substr(-2) + " AM";
       }
-      return `${h}:${m}`;
+      else {
+        formattedTime = (h-12) + ':' + m.substr(-2) + " PM";
+      }
+      return formattedTime;
     };
+    var hoursOpen = true;
+    var weekday = true;
+    var now = moment().unix()
+    var currentTime = formatTime(now);
+    var day = moment().day();
+    if (day == 6 || day == 7) {
+      weekday = false;
+    }
+    else if ((currentTime.substr(-2) == "AM" && currentTime < "7:30 AM") || (currentTime.substr(-2) == "PM" && currentTime > "4:30 PM")){
+      hoursOpen = false;
+    }
 
     return (
         <ChartPathProvider data={{ points: data, smoothingStrategy: 'bezier' }}>
@@ -101,6 +124,7 @@ const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
             <ChartDot style={{ backgroundColor: 'black' }} />
           </View>
         <View style = {styles.buttonContainer}>
+          {hoursOpen ?
           <TouchableOpacity	
           style={[styles.buttonLabel, activeLabel === "Hour" && styles.activeGraphLabel]}
           onPress={() => {
@@ -110,6 +134,9 @@ const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
               <Text style={styles.buttonText}> {graphs[0].label}</Text>
             </View>
           </TouchableOpacity>
+          : null
+          }
+          {weekday ? 
           <TouchableOpacity
           style={[styles.buttonLabel, activeLabel === "Day" && styles.activeGraphLabel]}
           onPress={() => {
@@ -118,7 +145,9 @@ const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
             <View>
               <Text style={styles.buttonText}> {graphs[1].label}</Text>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> 
+          : null
+          }
           <TouchableOpacity
           style={[styles.buttonLabel, activeLabel === "Month" && styles.activeGraphLabel]}
           onPress={() => {

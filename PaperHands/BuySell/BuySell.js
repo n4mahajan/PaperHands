@@ -23,7 +23,7 @@ export default function BuySell ({navigation, route}) {
 	const generateData = (xValues, yValues) => {
 		const currentData = []
 		for (var i = 0; i < yValues.length; i++){
-			let temp = { x:xValues[i], y:yValues[i]}
+			let temp = { x:(xValues[i].toFixed(2)), y:(yValues[i].toFixed(2))}
 			currentData.push(temp)
 		}
 		return currentData
@@ -139,6 +139,13 @@ export default function BuySell ({navigation, route}) {
 		}
 	}
 
+	var shares = 0;
+	if (stocks[symbol]) {
+		shares = stocks[symbol];
+	}
+
+	var currentPrice = parseFloat(price);
+	currentPrice = currentPrice.toFixed(2);
 	return (
 		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 	<View style = {{
@@ -172,8 +179,9 @@ export default function BuySell ({navigation, route}) {
 		</View>
 		
 		<View style = {styles.input}>
-			<Text>
-				Enter amount of shares:	
+			<Text style = {{textAlign:'center'}}>
+				Shares owned: {shares} {"\n"}
+				Enter amount of shares to buy/sell:	
 			</Text>
 			<TextInput placeholder="Amount" onChangeText={setAmount} style={styles.textInput} keyboardType="numeric"/>
 		</View>
