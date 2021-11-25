@@ -65,7 +65,9 @@ export default function Profile () {
 					<Text>Transaction History</Text>
 				</View>
 				<View style={styles.tableHeader}>
-					<Text>Date</Text>
+					<View style={{width: "20%", alignItems: "center"}}>
+						<Text>Date</Text>
+					</View>
 					<Text>Stock</Text>
 					<Text>Type</Text>
 					<Text>Value</Text>
@@ -77,7 +79,9 @@ export default function Profile () {
 					renderItem={({item})=>(
 						<react.Fragment>
 							<View style={styles.container}>
-								<Text style = {styles.item}>{item.date} </Text>
+								<View style={{width: "27%", paddingRight: 20}}>
+									<Text style = {styles.date}>{item.date} </Text>
+								</View>
 								<Text style = {styles.item}>{item.company}</Text>
 								<Text style = {styles.item}>{item.type} </Text>
 								<Text style = {styles.item}>{item.value}</Text>
@@ -149,16 +153,15 @@ const styles = StyleSheet.create({
 	tableHeader: {
 		flex: 1,
 		flexDirection: 'row',
-		justifyContent: 'space-evenly',
+		justifyContent: 'space-between',
 		alignItems: 'center',
-		paddingHorizontal: 10,
+		paddingHorizontal: 15,
 	},
 	container: {
 		flex: 1,
 		flexDirection: 'row',
-		justifyContent: 'space-evenly',
+		justifyContent: 'space-between',
 		alignItems: 'center',
-		paddingHorizontal: 10,
 		marginTop: 10,
 		borderColor: "black",
 		borderTopWidth: 2,
@@ -176,5 +179,13 @@ const styles = StyleSheet.create({
 		padding: 5,
 		fontSize: 14,
 		textAlign: 'center',
+	},
+	date: {
+		flex: 1,
+		marginTop: 10,
+		padding: 10,
+		fontSize: 14,
+		textAlign: 'center',
+		width: "130%"
 	}
 })
