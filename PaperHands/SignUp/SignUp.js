@@ -31,7 +31,7 @@ export default function SignUp({navigation}) {
 				balance,
 				stocks:{},
 				transactionHistory: new Array(),
-				lastPortfolioValue: 0
+				lastPortfolioValue: 100000
 		})
 			
 		

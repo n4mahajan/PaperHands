@@ -50,6 +50,7 @@ function Portfolio({navigation}){
 				}))
 			})
 		})   
+		console.log(balance)
 	}, [])
 
 	firebase.auth().onAuthStateChanged((user) => {
@@ -146,7 +147,7 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 		marginHorizontal: 10,
 		borderColor: "black",
-		borderWidth: 2
+		borderTopWidth: 2
 	},
 	item: {
 		flex: 1,

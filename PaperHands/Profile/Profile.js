@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 10,
 		marginTop: 10,
 		borderColor: "black",
-		borderWidth: 2,
+		borderTopWidth: 2,
 	},
 	item: {
 		flex: 1,
