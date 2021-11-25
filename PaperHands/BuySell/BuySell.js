@@ -21,7 +21,7 @@ export default function BuySell ({navigation, route}) {
 	const generateData = (xValues, yValues) => {
 		const currentData = []
 		for (var i = 0; i < yValues.length; i++){
-			let temp = { x:xValues[i], y:yValues[i]}
+			let temp = { x:(xValues[i].toFixed(2)), y:(yValues[i].toFixed(2))}
 			currentData.push(temp)
 		}
 		return currentData
@@ -135,6 +135,13 @@ export default function BuySell ({navigation, route}) {
 		}
 	}
 
+	var shares = 0;
+	if (stocks[symbol]) {
+		shares = stocks[symbol];
+	}
+
+	var currentPrice = parseFloat(price);
+	currentPrice = currentPrice.toFixed(2);
 	return (
 		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 	<View style = {{
@@ -145,8 +152,9 @@ export default function BuySell ({navigation, route}) {
 		
 		<View style = {styles.priceContainer}>
 			<Text >
-				{symbol} Price: ${price}
-				You own {stocks[0]} stocks
+				{symbol} Price: ${currentPrice}
+				{"\n"}
+				Owned: {shares} Shares
 			</Text>	
 		</View>
 		<View>
