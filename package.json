@@ -17,6 +17,7 @@
     "axios": "^0.21.4",
     "expo": "^42.0.0",
     "expo-font": "~9.2.1",
+    "expo-linear-gradient": "^10.0.3",
     "finnhub": "^1.2.6",
     "firebase": "8.2.3",
     "moment": "^2.29.1",

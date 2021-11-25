@@ -8,7 +8,7 @@
 
 import react from "react"
 import React,{useContext,useEffect,useState} from "react"
-import { Image, StyleSheet, Text, View ,Button,TextInput, TouchableOpacity, Alert, FlatList, ScrollView} from "react-native"
+import { Image, StyleSheet, Text, View ,Button,TextInput, TouchableOpacity, Alert, FlatList, ScrollView, AppState} from "react-native"
 import { AuthContext } from "../../context/AuthProvider"
 import firebase from "firebase"
 
@@ -20,11 +20,6 @@ export default function Profile () {
 	const {user,balance,stocks, transactionHistory}= useContext(AuthContext)
 
 	const [amount, setAmount] = useState()
-	const [tableHeader, setTableHeader] = useState(["Date", "Company", "Type", "Value", "Shares"])
-
-	useEffect(()=>{
-		console.log(transactionHistory)
-	}, [])
 
 	async function addFunds() {
 		if (isNaN(amount)) {
@@ -94,7 +89,7 @@ export default function Profile () {
 				
 			</ScrollView>
 			<TouchableOpacity style={styles.logoutButton} onPress={()=>{
-				firebase.auth().signOut()
+					firebase.auth().signOut()
 				}}>
 				<Text style={styles.buttonText}>Sign Out</Text>
 			</TouchableOpacity>

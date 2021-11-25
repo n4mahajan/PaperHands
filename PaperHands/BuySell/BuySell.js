@@ -16,6 +16,8 @@ import axios from "axios";
 import Chart from "./Chart";
 import moment from "moment";
 import {useNavigation} from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient'
+import Icon from 'react-native-vector-icons/Feather';
 
 export default function BuySell ({navigation, route}) {
 	const generateData = (xValues, yValues) => {
@@ -31,6 +33,7 @@ export default function BuySell ({navigation, route}) {
 	const [amount, setAmount] = useState()
 	const [stockAmount, setStocks] = useState()
 	const [symbol, setSymbol] = useState(route.params.symbol)
+	const [priceChange, setPriceChange] = useState(route.params.priceChange)
 	const [hourData, setHourData] = useState([])
 	const [dayData, setDayData] = useState([])
 	const [monthData, setMonthData] = useState([])
@@ -94,6 +97,7 @@ export default function BuySell ({navigation, route}) {
 		
 		const numberAmount=parseInt(amount)
 		const totalCost= numberAmount*price
+		console.log(totalCost)
 		if (balance>=totalCost){
 			if(stocks.hasOwnProperty(symbol)){
 				stocks[symbol]+=numberAmount
@@ -150,13 +154,20 @@ export default function BuySell ({navigation, route}) {
 	}}>
 		
 		
-		<View style = {styles.priceContainer}>
-			<Text >
-				{symbol} Price: ${currentPrice}
-				{"\n"}
-				Owned: {shares} Shares
-			</Text>	
-		</View>
+		<LinearGradient colors={["#4D00FF", "#E400FF"]} style = {styles.priceContainer}>
+			<View style={styles.leftSubHeading}>
+				<Text style={{color: 'white', fontSize: 16}}>Summary</Text>
+				<Text style={{color: 'white', fontSize: 22}}>${price}</Text>
+			</View>
+			<View style={styles.rightSubHeading}>
+				<Text style={{color: 'white', fontSize: 16}}>Today's Change</Text>
+				<View style={{flexDirection: "row"}}>
+					<Icon size={27} name={ priceChange >=0 ? "arrow-up" : "arrow-down"}
+						style={priceChange >= 0 ? styles.valueUp : styles.valueDown}/>
+					<Text style={{color: 'white', fontSize: 22}}>${priceChange}</Text>
+				</View>
+			</View>
+		</LinearGradient>
 		<View>
 			<Chart 
 				hourData = {hourData}
@@ -168,8 +179,9 @@ export default function BuySell ({navigation, route}) {
 		</View>
 		
 		<View style = {styles.input}>
-			<Text>
-				Enter amount of shares:	
+			<Text style = {{textAlign:'center'}}>
+				Shares owned: {shares} {"\n"}
+				Enter amount of shares to buy/sell:	
 			</Text>
 			<TextInput placeholder="Amount" onChangeText={setAmount} style={styles.textInput} keyboardType="numeric"/>
 		</View>
@@ -220,10 +232,17 @@ export default function BuySell ({navigation, route}) {
 
 const styles = StyleSheet.create( {
 	priceContainer: {
-		flex: 1,
-		alignItems: "center",
-		justifyContent: "center",
-		top: 25,
+		marginRight: 40,
+		marginLeft: 40,
+		marginTop: 10,
+		paddingTop: 20,
+		paddingBottom: 20,
+		backgroundColor: '#00ffa9',
+		borderRadius: 10,
+		borderWidth: 1,
+		borderColor: '#fff',
+		flexDirection: "row",
+		justifyContent: "space-between"
 	},
 	input: {
 		flex: 1,
@@ -258,6 +277,18 @@ const styles = StyleSheet.create( {
 		flex: 1,
 		justifyContent: "space-around"
 	  },
-	  
-	  
+	  leftSubHeading: {
+		alignItems: "flex-start",
+		paddingLeft: 20
+	},
+	rightSubHeading: {
+		alignItems: "flex-end",
+		paddingRight: 20
+	},
+	valueUp: {
+		color: "#00ffa9"
+	},
+	valueDown: {
+		color: "#E62124"
+	}
 });

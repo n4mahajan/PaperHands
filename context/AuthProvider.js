@@ -5,12 +5,12 @@ import {Text, View} from 'react-native';
 
 const AuthContext = createContext();
 
-const AuthProvider = ({children}) => {
+const AuthProvider = ({children, navigation}) => {
   const [user, setUser] = useState();
   const [balance,setBalance]=useState(null)
   const [stocks,setStocks]=useState(null)
   const [transactionHistory, setTransactionHistory] = useState([])
-
+  const [lastPortfolioValue, setLastPortfolioValue] = useState(0)
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(async firebaseUser => {
@@ -26,7 +26,7 @@ const AuthProvider = ({children}) => {
             setUser({
               name:doc.data().name,
               uid:firebaseUser.uid,
-              lastBalance:doc.data().lastBalance
+              lastPortfolioValue:doc.data().lastPortfolioValue
             })
         });
 
@@ -54,8 +54,16 @@ const AuthProvider = ({children}) => {
       .doc(firebaseUser.uid)
       .onSnapshot(documentSnapshot => {
         const b = documentSnapshot.data().transactionHistory;
-        console.log(b)
         setTransactionHistory(b);
+      });
+
+     firebase
+      .firestore()
+      .collection('Users')
+      .doc(firebaseUser.uid)
+      .onSnapshot(documentSnapshot => {
+        const b = documentSnapshot.data().lastPortfolioValue;
+        setLastPortfolioValue(b);
       });
 
       }else{
@@ -71,7 +79,8 @@ const AuthProvider = ({children}) => {
         setUser,
         balance,
         stocks,
-        transactionHistory
+        transactionHistory,
+        lastPortfolioValue
       }}>
       {children}
     </AuthContext.Provider>
