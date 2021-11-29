@@ -13,20 +13,9 @@ import SignUp from "../PaperHands/SignUp/SignUp"
 import { AuthContext } from '../context/AuthProvider';
 
 import React, {useContext} from 'react';
-import { Image } from "react-native"
+import { View } from "react-native"
 
-// Import icons for navigation
-import homeIcon from "../assets/images/homeIcon.png"
-import portfolioIcon from "../assets/images/portfolioIcon.png"
-import newsIcon from "../assets/images/newsIcon.png"
-import profileIcon from "../assets/images/profileIcon.png"
-
-// Colored icon when given page/component is selected
-import selectedHomeIcon from "../assets/images/selectedHomeIcon.png"
-import selectedPortfolioIcon from "../assets/images/selectedPortfolioIcon.png"
-import selectedNewsIcon from "../assets/images/selectedNewsIcon.png"
-import selectedProfileIcon from "../assets/images/selectedProfileIcon.png"
-
+import Icon from 'react-native-vector-icons/Feather';
 
 const LoginStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -38,7 +27,7 @@ const ProfileStack=createStackNavigator()
 const home = ({navigation}) => {
   return (
     <HomeStack.Navigator
-    screenOptions={{
+      screenOptions={{
       headerBackTitleVisible:false,
       headerTintColor:'black'
     }}>
@@ -118,91 +107,63 @@ export default function Navigation({navigation}) {
         return (
             <NavigationContainer theme={MyTheme}>
               <Tab.Navigator
-              screenOptions={{
-                headerShown: false,
-              }}>
+                screenOptions={{
+                  headerShown: false,
+                }}
+                tabBarOptions={{
+                  activeTintColor: "#E400FF"
+                }}
+              >
                 <Tab.Screen
                   name="Home"
                   component={home}
                   options={{
-                    tabBarIcon: ({focused}) => {
-                      if (!focused) {
-                        return (
-                          <Image 
-                            source={homeIcon}
-                          />
-                        );
-                      } else {
-                        return (
-                          <Image 
-                            source={selectedHomeIcon}
-                          />
-                        );
-                      }
-                    },
+                    tabBarIcon: ({focused, size, color}) => {
+                      return (
+                        <View style={{backgroundColor: focused ? "#E400FF" : "white", borderRadius: 10, width: 45, alignItems: "center"}}>
+                          <Icon name="trending-up" size={size} color={focused ? "white" : "gray"}/>
+                        </View>
+                      )
+                    }
                   }}
                 />
                 <Tab.Screen
                   name="Portfolio"
                   component={port}
                   options={{
-                    tabBarIcon: ({focused}) => {
-                      if (!focused) {
-                        return (
-                          <Image 
-                            source={portfolioIcon}
-                          />
-                        );
-                      } else {
-                        return (
-                          <Image 
-                            source={selectedPortfolioIcon}
-                          />
-                        );
-                      }
-                    },
+                    tabBarIcon: ({focused, size, color}) => {
+                      return (
+                        <View style={{backgroundColor: focused ? "#E400FF" : "white", borderRadius: 10, width: 45, alignItems: "center"}}>
+                          <Icon name="pie-chart" size={size} color={focused ? "white" : "gray"}/>
+                        </View>
+                      )
+                    }
                   }}
                 />
                 <Tab.Screen
                   name="News"
                   component={news}
                   options={{
-                    tabBarIcon: ({focused}) => {
-                      if (!focused) {
-                        return (
-                          <Image 
-                            source={newsIcon}
-                          />
-                        );
-                      } else {
-                        return (
-                          <Image 
-                            source={selectedNewsIcon}
-                          />
-                        );
-                      }
-                    },
+                    tabBarIcon: ({focused, size, color}) => {
+                      return (
+                        <View style={{backgroundColor: focused ? "#E400FF" : "white", borderRadius: 10, width: 45, alignItems: "center"}}>
+                          <Icon name="book-open" size={size} color={focused ? "white" : "gray"}/>
+                        </View>
+                      )
+                    }
                   }}
                 />
                 <Tab.Screen
                   name="Profile"
                   component={profile}
                   options={{
-                    tabBarIcon: ({focused}) => {
-                      if (!focused) {
-                        return (
-                          <Image 
-                            source={profileIcon}
-                          />
-                        );
-                      } else {
-                        return (
-                          <Image 
-                            source={selectedProfileIcon}
-                          />
-                        );
-                      }
-                    },
+                    tabBarIcon: ({focused, size, color}) => {
+                      return (
+                        <View style={{backgroundColor: focused ? "#E400FF" : "white", borderRadius: 10, width: 45, alignItems: "center"}}>
+                          <Icon name="user" size={size} color={focused ? "white" : "gray"}/>
+                        </View>
+                      )
+                    }
                   }}
                 />
               </Tab.Navigator>
