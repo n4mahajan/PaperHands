@@ -106,7 +106,7 @@ function Portfolio({navigation}){
 				data={Object.keys(stocks)} 
 				renderItem={({item})=>(
 					<react.Fragment>
-						<TouchableHighlight onPress={() => stockOnClick([item])} underlayColor="white"> 
+						<TouchableHighlight onPress={() => stockOnClick([item])} underlayColor="white" style={{paddingBottom: 10}}> 
 							<View style={styles.container}>
 								<Text style = {styles.item}>{item} </Text>
 								<Text style = {styles.item}>{prices[item]}</Text>
@@ -148,8 +148,6 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-evenly',
 		alignItems: 'center',
 		paddingHorizontal: 20,
-		marginTop: 10,
-		marginHorizontal: 10,
 		borderColor: "black",
 		borderTopWidth: 2
 	},
