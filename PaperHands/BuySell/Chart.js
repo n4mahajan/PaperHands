@@ -96,8 +96,9 @@ const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
     var now = moment().unix()
     var currentTime = formatTime(now);
     var day = moment().day();
-    if (day == 6 || day == 7) {
+    if (day == 6 || day == 0) {
       weekday = false;
+      hoursOpen = false;
     }
     else if ((currentTime.substr(-2) == "AM" && currentTime < "7:30 AM") || (currentTime.substr(-2) == "PM" && currentTime > "4:30 PM")){
       hoursOpen = false;
