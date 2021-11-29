@@ -55,7 +55,7 @@ export default function News (){
 	  }
 
 	return (
-		<ScrollView style={{backgroundColor: "#ebebeb", marginTop: "5%"}}>
+		<ScrollView style={{backgroundColor: "white", marginTop: "5%"}}>
 			<Text style={{fontSize: 22, marginBottom: "5%", fontWeight: "bold", alignSelf: "center"}}>Financial News Provided by Finnhub:</Text>
 			{articles.map((result,key)=>(
             <View style={styles.container} key={key}>
@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
 		width: "90%",
 		height: "100%",
 		resizeMode: "cover",
+		borderRadius: 8
 	  },
 	  container: {
         width: "98%",
@@ -89,8 +90,9 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
 		marginBottom: "5%",
-		borderRadius: 5,
+		borderRadius: 8,
 		alignSelf: "center", 
 		flex: 1, 
+		backgroundColor: "#ebebeb"
 	},
 })
