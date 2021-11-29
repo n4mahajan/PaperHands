@@ -10,7 +10,7 @@ const AuthProvider = ({children, navigation}) => {
   const [balance,setBalance]=useState(null)
   const [stocks,setStocks]=useState(null)
   const [transactionHistory, setTransactionHistory] = useState([])
-  const [lastPortfolioValue, setLastPortfolioValue] = useState(0)
+  const [lastPortfolioValue, setLastPortfolioValue] = useState(null)
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(async firebaseUser => {

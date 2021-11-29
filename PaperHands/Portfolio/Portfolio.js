@@ -13,6 +13,7 @@ import { AuthContext } from "../../context/AuthProvider"
 import { LinearGradient } from 'expo-linear-gradient'
 import Icon from 'react-native-vector-icons/Feather';
 import firebase from "firebase"
+import { useIsFocused } from '@react-navigation/native'
  
 function Portfolio({navigation}){
 	const {user,stocks,balance, lastPortfolioValue}=useContext(AuthContext)
@@ -24,11 +25,15 @@ function Portfolio({navigation}){
 	const api_key = finnhub.ApiClient.instance.authentications['api_key'];
 	api_key.apiKey = "c54gglaad3ifdcrdm7u0"
 	const finnhubClient = new finnhub.DefaultApi()	
+	const isFocused = useIsFocused()
 
 	useEffect(() => {
-		console.log(lastPortfolioValue)
+		console.log(balance)
 		var thing=balance
 		const keys=Object.keys(stocks)
+		console.log(user)
+		if (keys.length == 0)
+			setValue(balance)
 		keys.forEach(async(key)=>{
 			 finnhubClient.quote(key, (error, data, response) => {
 				var priceChange = data.d.toFixed(2)
@@ -50,7 +55,7 @@ function Portfolio({navigation}){
 				}))
 			})
 		})   
-	}, [])
+	}, [isFocused])
 
 	firebase.auth().onAuthStateChanged((user) => {
 		if (!user) {
@@ -146,7 +151,7 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 		marginHorizontal: 10,
 		borderColor: "black",
-		borderWidth: 2
+		borderTopWidth: 2
 	},
 	item: {
 		flex: 1,
