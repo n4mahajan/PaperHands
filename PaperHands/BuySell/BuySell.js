@@ -111,6 +111,7 @@ export default function BuySell ({navigation, route}) {
 				balance:balance-totalCost,
 				transactionHistory: newTransactionHistory
 			})
+			navigation.goBack()
 		}
 	}
 
@@ -130,12 +131,13 @@ export default function BuySell ({navigation, route}) {
 					balance:balance+totalGain,
 					transactionHistory: newTransactionHistory
 				})
+				navigation.goBack()
 			}else{
-				Alert.alert('You dont own enough of this stock')
+				Alert.alert('You don\'t own enough of this stock')
 			}
 
 		}else{
-			Alert.alert('You dont own any shares of this stock')
+			Alert.alert('You don\'t own any shares of this stock')
 		}
 	}
 
@@ -196,7 +198,6 @@ export default function BuySell ({navigation, route}) {
 			Alert.alert("Are you sure you want to buy?", "", [
 				{text: "Confirm", onPress: () => {
 					buy()
-					navigation.goBack()
 				}},
 				{text: "Deny", onPress: () => console.log("Transaction Voided")},
 			])}   >
@@ -210,7 +211,6 @@ export default function BuySell ({navigation, route}) {
 			Alert.alert("Are you sure you want to sell?", "", [
 				{text: "Confirm", onPress: () => {
 					sell()
-					navigation.goBack()
 				}},
 				{text: "Deny", onPress: () => console.log("Transaction Voided")},
 			])}   >
