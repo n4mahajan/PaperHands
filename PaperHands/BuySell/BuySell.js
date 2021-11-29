@@ -61,6 +61,8 @@ export default function BuySell ({navigation, route}) {
 
 		finnhubClient.quote(symbol, (error, data, response) => {
 			// console.log(data)
+			if (!priceChange)
+				setPriceChange(data.d)
 			const updatedPrice = data.c
 			setPrice(updatedPrice)
 		});
