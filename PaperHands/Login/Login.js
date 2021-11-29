@@ -57,9 +57,6 @@ export default function Login ({navigation}) {
 							<Text style={styles.buttonText}>Login</Text>
 						</TouchableHighlight>
 						<View style={styles.extraLinksContainer}>
-							<TouchableHighlight underlayColor="transparent">
-								<Text style={styles.extraLinksText}>Forgot Password?</Text>
-							</TouchableHighlight>
 							<TouchableHighlight onPress={()=>{navigation.push("SignUp")}} underlayColor="transparent">
 								<Text style={styles.extraLinksText}>Sign Up</Text>
 							</TouchableHighlight>
@@ -143,7 +140,7 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 	},
 	extraLinksContainer: {
-		justifyContent: "space-between",
+		justifyContent: "flex-end",
 		flexDirection: "row",
 		paddingLeft: "3%",
 		paddingRight: "3%",
