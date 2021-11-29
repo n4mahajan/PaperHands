@@ -1,4 +1,4 @@
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 
@@ -96,7 +96,7 @@ export default function Navigation({navigation}) {
     const {user} = useContext(AuthContext);
     if (user==null){
         return (
-            <NavigationContainer>
+            <NavigationContainer theme={MyTheme}>
               <LoginStack.Navigator>
                 <LoginStack.Screen
                     name="Login"
@@ -116,7 +116,7 @@ export default function Navigation({navigation}) {
     }
     if (user!=null){
         return (
-            <NavigationContainer>
+            <NavigationContainer theme={MyTheme}>
               <Tab.Navigator
               screenOptions={{
                 headerShown: false,
@@ -211,3 +211,12 @@ export default function Navigation({navigation}) {
     }
     
 }
+
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: 'rgb(255, 45, 85)',
+    background:'white'
+  },
+};
