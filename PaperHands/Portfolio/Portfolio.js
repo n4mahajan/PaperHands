@@ -28,10 +28,8 @@ function Portfolio({navigation}){
 	const isFocused = useIsFocused()
 
 	useEffect(() => {
-		console.log(balance)
 		var thing=balance
 		const keys=Object.keys(stocks)
-		console.log(user)
 		if (keys.length == 0)
 			setValue(balance)
 		keys.forEach(async(key)=>{
@@ -64,7 +62,6 @@ function Portfolio({navigation}){
 	 });
 
 	function update() {
-		console.log("updating")
 		if (lastPortfolioValue === undefined || lastPortfolioValue === null) {
 			firebase.firestore().collection('Users').doc(newUser.user.uid).set({
 				lastPortfolioValue: value

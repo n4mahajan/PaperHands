@@ -19,9 +19,11 @@ import { AppLoading, DangerZone } from "expo"
 import AuthProvider from "./context/AuthProvider"
 import Navigation from "./navigation/Navigation"
 import ContextWrapper from "./components/ContextWrapper"
-import {Text} from "react-native"
+import {LogBox} from "react-native"
 
-
+// TODO: remove these lines after demo
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 export default function App (){
 	return(
