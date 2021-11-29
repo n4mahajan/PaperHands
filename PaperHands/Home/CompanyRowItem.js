@@ -46,7 +46,7 @@ export default function CompanyRowItem(props) {
                     <TouchableHighlight style={styles.priceBox}>
 						<Text>${ price }</Text>
 					</TouchableHighlight>
-                    <Text style={[styles.priceText, priceChange > 0 ? styles.priceIncreased : priceChange === 0 ? styles.priceSame : styles.priceDecreased]}>{priceChange} ({percentChange}%)</Text>
+                    <Text style={[styles.priceText, priceChange > 0 ? styles.priceIncreased : priceChange === 0 ? styles.priceSame : styles.priceDecreased]}>${priceChange} ({percentChange}%)</Text>
                 </View>
             </View>
 		</TouchableHighlight>
@@ -66,7 +66,8 @@ const styles = StyleSheet.create({
         paddingLeft: 5
 	},
     symbol: {
-        color: "gray",
+        color: "black",
+        fontWeight: "bold",
         fontSize: 20
     },
     description: {
