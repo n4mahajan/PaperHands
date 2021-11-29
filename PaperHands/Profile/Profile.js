@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		marginTop: 10,
 		borderColor: "black",
-		borderTopWidth: 2,
+		borderTopWidth: 1,
 	},
 	item: {
 		flex: 1,

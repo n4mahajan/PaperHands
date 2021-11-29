@@ -105,7 +105,7 @@ function Portfolio({navigation}){
 					<react.Fragment>
 						<TouchableHighlight onPress={() => stockOnClick([item])} underlayColor="white" style={{paddingBottom: 10}}> 
 							<View style={styles.container}>
-								<Text style = {styles.item}>{item} </Text>
+								<Text style = {[styles.item, {fontWeight: "bold", fontSize: 16}]}>{item} </Text>
 								<Text style = {styles.item}>{prices[item]}</Text>
 								<Text style = {styles.item}>{stocks[item]} </Text>
 								<Text style = {styles.totalValue}>{total[item]}</Text>
@@ -144,9 +144,11 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-evenly',
 		alignItems: 'center',
-		paddingHorizontal: 20,
+		paddingHorizontal: 14,
 		borderColor: "black",
-		borderTopWidth: 2
+		borderTopWidth: 1,
+		width: "96%",
+		alignSelf: "center"
 	},
 	item: {
 		flex: 1,

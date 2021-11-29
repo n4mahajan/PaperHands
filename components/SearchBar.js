@@ -38,7 +38,7 @@ const SearchBar=({navigation,setToggle})=>{
 						navigation.push("BuySell", {symbol: item.symbol})
 						
 					}}>
-						<Text style={styles.text}>{item.symbol}:{item.description}</Text>
+						<Text style={styles.text}>{item.symbol}: {item.description}</Text>
 					</TouchableOpacity>
 
 				)}/>
