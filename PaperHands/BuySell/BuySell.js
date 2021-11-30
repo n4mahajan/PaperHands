@@ -108,6 +108,8 @@ export default function BuySell ({navigation, route}) {
 				stocks[symbol]=numberAmount
 			}
 			var newTransactionHistory = transactionHistory
+			if (!newTransactionHistory || transactionHistory === 1)
+				newTransactionHistory = []
 			newTransactionHistory.push({date: new Date(Date.now()).toLocaleString(), company: symbol, type: "Buy", value: totalCost, shares: numberAmount})
 			await firebase.firestore().collection("Users").doc(user.uid).update({
 				stocks:stocks,
@@ -150,7 +152,7 @@ export default function BuySell ({navigation, route}) {
 	}
 
 	var currentPrice = parseFloat(price);
-	currentPrice = currentPrice.toFixed(2);
+	currentPrice = parseFloat(currentPrice.toFixed(2));
 	return (
 	<KeyboardAwareScrollView 
 		extraHeight={135} 

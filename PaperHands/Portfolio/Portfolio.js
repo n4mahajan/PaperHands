@@ -17,7 +17,7 @@ import { useIsFocused } from '@react-navigation/native'
  
 function Portfolio({navigation}){
 	const {user,stocks,balance, lastPortfolioValue}=useContext(AuthContext)
-	const [value,setValue]=useState(balance.toFixed(2))
+	const [value,setValue]=useState(parseFloat(balance.toFixed(2)))
 	const [prices, setPrices] = useState({})
 	const [total, setTotals] = useState({})
 	const [priceChanges, setPriceChanges] = useState({})
@@ -28,16 +28,16 @@ function Portfolio({navigation}){
 	const isFocused = useIsFocused()
 
 	useEffect(() => {
-		var thing=balance
 		const keys=Object.keys(stocks)
 		if (keys.length == 0)
 			setValue(balance)
+		var thing=balance
 		keys.forEach(async(key)=>{
 			 finnhubClient.quote(key, (error, data, response) => {
-				var priceChange = data.d.toFixed(2)
-				var price = data.c.toFixed(2)
-				var total = (data.c*stocks[key]).toFixed(2)
-				thing += parseFloat(total)
+				var priceChange = parseFloat(data.d.toFixed(2))
+				var price = parseFloat(data.c.toFixed(2))
+				var total = parseFloat(data.c*stocks[key].toFixed(2))
+				thing += total
 				setPrices((prevState) => ({
 					...prevState,
 					[key]: price
@@ -46,7 +46,8 @@ function Portfolio({navigation}){
 					...prevState,
 					[key]: total
 				}))
-				setValue(thing.toFixed(2)) 
+				thing = thing
+				setValue(parseFloat(thing.toFixed(2)))
 				setPriceChanges((prevState) => ({
 					...prevState,
 					[key]: priceChange
@@ -62,15 +63,9 @@ function Portfolio({navigation}){
 	 });
 
 	function update() {
-		if (lastPortfolioValue === undefined || lastPortfolioValue === null) {
-			firebase.firestore().collection('Users').doc(newUser.user.uid).set({
-				lastPortfolioValue: value
-			})
-		} else {
-			firebase.firestore().collection('Users').doc(user.uid).update({
-				lastPortfolioValue: value
-			})
-		}
+		firebase.firestore().collection('Users').doc(user.uid).update({
+			lastPortfolioValue: value
+		})
 	};
 
 	const stockOnClick = (stock) => {
@@ -85,11 +80,11 @@ function Portfolio({navigation}){
 					<Text style={{color: 'white', fontSize: 22}}>${value}</Text>
 				</View>
 				<View style={styles.rightSubHeading}>
-					<Text style={{color: 'white', fontSize: 16}}>Since Last Time</Text>
+					<Text style={{color: 'white', fontSize: 16}}>Since Last Login</Text>
 					<View style={{flexDirection: "row"}}>
 						<Icon size={27} name={ value-lastPortfolioValue >= 0 ? "arrow-up" : "arrow-down"}
 							style={value-lastPortfolioValue >= 0 ? styles.valueUp : styles.valueDown}/>
-						<Text style={{color: 'white', fontSize: 22}}>${value-lastPortfolioValue}</Text>
+						<Text style={{color: 'white', fontSize: 22}}>${lastPortfolioValue ? (value-lastPortfolioValue).toFixed(2) : 0}</Text>
 					</View>
 				</View>
 			</LinearGradient>

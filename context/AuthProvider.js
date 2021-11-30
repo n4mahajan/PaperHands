@@ -26,7 +26,6 @@ const AuthProvider = ({children, navigation}) => {
             setUser({
               name:doc.data().name,
               uid:firebaseUser.uid,
-              lastPortfolioValue:doc.data().lastPortfolioValue
             })
         });
 

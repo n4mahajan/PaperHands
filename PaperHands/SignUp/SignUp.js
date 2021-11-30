@@ -17,6 +17,7 @@ export default function SignUp({navigation}) {
 	const [password,setPassword]=useState(null)
 	const [name,setName]=useState(null)
 	const [balance,setBalance]=useState(100000)
+	const [lastPortfolioValue, setLastPortfolioValue]=useState(100000)
 
 	const {user}=useContext(AuthContext) 
 
@@ -31,7 +32,7 @@ export default function SignUp({navigation}) {
 				balance,
 				stocks:{},
 				transactionHistory: new Array(),
-				lastPortfolioValue: 100000
+				lastPortfolioValue
 		})
 			
 		
