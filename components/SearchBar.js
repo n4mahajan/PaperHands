@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react'
-import {View,TextInput,FlatList,Text,StyleSheet,TouchableOpacity} from 'react-native'
+import {View,TextInput,FlatList,Text,StyleSheet,TouchableHighlight, Button} from 'react-native'
 import axios from "axios"
 
 
@@ -32,7 +32,7 @@ const SearchBar=({navigation,setToggle})=>{
     return(
         <View>
 				<TextInput style={styles.textinput} placeholder="Search" placeholderTextColor = "black" onChangeText={setSearch}/>
-				<FlatList data={results} renderItem={({item})=>(
+				<FlatList style={{flexGrow: 0}} data={results} renderItem={({item})=>(
 					<TouchableOpacity onPress={()=>{
 						setToggle(false)
 						navigation.push("BuySell", {symbol: item.symbol})
@@ -42,6 +42,11 @@ const SearchBar=({navigation,setToggle})=>{
 					</TouchableOpacity>
 
 				)}/>
+				<TouchableHighlight title="Close" style={styles.button} onPress={()=>{
+						setToggle(false)
+				}}>
+					<Text style={styles.buttonText}>Close</Text>
+				</TouchableHighlight>
 		</View> 
     )
 }
@@ -58,6 +63,21 @@ const styles=StyleSheet.create({
 	},
 	text:{
 		fontSize:20
+	},
+	button: {
+		borderRadius: 8,
+		backgroundColor: 'black',
+		width: 80,
+		height: 30,
+		justifyContent: 'center',
+		alignSelf: "center",
+	},
+	buttonText: {
+		color: 'white',
+		fontWeight: 'bold',
+		textTransform: 'uppercase',
+		fontSize: 14,
+		textAlign: 'center',
 	}
 })
 

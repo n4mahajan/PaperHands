@@ -79,9 +79,7 @@ export default function Home({navigation}) {
 				>
 					<View style={styles.centeredView}>
 					
-					<Button title="Close" onPress={()=>{
-						setToggle(false)
-					}}/>
+					
 					<SearchBar navigation={navigation} setToggle={setToggle}/>
 					</View>
 				</Modal>
