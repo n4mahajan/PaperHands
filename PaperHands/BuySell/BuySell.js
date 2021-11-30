@@ -9,6 +9,7 @@
 import React, {useState, useEffect, useContext} from "react"
 import { Image, StyleSheet, Text, View, Button, Alert, TextInput, TouchableOpacity,
 	TouchableWithoutFeedback,Keyboard} from "react-native"
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { AuthContext } from "../../context/AuthProvider"
 import firebase from "firebase"
 import { Directions } from "react-native-gesture-handler";
@@ -151,11 +152,17 @@ export default function BuySell ({navigation, route}) {
 	var currentPrice = parseFloat(price);
 	currentPrice = currentPrice.toFixed(2);
 	return (
-		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-	<View style = {{
-		flex: 1,
-		background: "blue",
-	}}>
+	<KeyboardAwareScrollView 
+		extraHeight={135} 
+		enabledOnAndroid={true} 
+		extraScrollHeight={70}
+		keyboardShouldPersistTaps='handled'
+		scrollEnabled={true}
+		style = {{
+			flex: 1,
+			background: "blue",
+		}}
+	>
 		
 		
 		<LinearGradient colors={["#4D00FF", "#E400FF"]} style = {styles.priceContainer}>
@@ -227,8 +234,7 @@ export default function BuySell ({navigation, route}) {
 		
 		
 		
-	</View>
-	</TouchableWithoutFeedback>
+	</KeyboardAwareScrollView>
 	)
 }
 
