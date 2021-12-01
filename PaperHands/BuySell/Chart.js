@@ -13,13 +13,6 @@ const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
 	  const [data, setData] = useState()
     let previous = null
     const [activeLabel, setActiveLabel] = useState();
-    
-    useEffect(() => {
-      if (hourData !== previous) {
-        previous = hourData
-        setData(hourData)
-      }
-    }, [hourData])
 
     const graphs = [
       {
@@ -96,12 +89,34 @@ const Chart = ( {hourData, dayData, monthData, yearData, symbol}) => {
     var now = moment().unix()
     var currentTime = formatTime(now);
     var day = moment().day();
+    var beforeOpen = currentTime.substr(-2) == "AM" && (currentTime < "7:30 AM" || currentTime.substr(0,2) == "10" || currentTime.substr(0, 2) == "11")
+    var afterClosed = currentTime.substr(-2) == "PM" && (currentTime > "4:30 PM" || currentTime.substr(0,2) == "10" || currentTime.substr(0,2) == "11")
     if (day == 6 || day == 0) {
       weekday = false;
       hoursOpen = false;
+      useEffect(() => {
+        if (monthData !== previous) {
+          previous = monthData
+          setData(monthData)
+        }
+      }, [monthData])
     }
-    else if ((currentTime.substr(-2) == "AM" && currentTime < "7:30 AM") || (currentTime.substr(-2) == "PM" && currentTime > "4:30 PM")){
+    else if ( beforeOpen || afterClosed) {
       hoursOpen = false;
+      useEffect(() => {
+        if (dayData !== previous) {
+          previous = dayData
+          setData(dayData)
+        }
+      }, [dayData])
+    }
+    else {
+      useEffect(() => {
+        if (hourData !== previous) {
+          previous = hourData
+          setData(hourData)
+        }
+      }, [hourData])
     }
 
     return (
