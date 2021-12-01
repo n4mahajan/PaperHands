@@ -36,7 +36,7 @@ function Portfolio({navigation}){
 			 finnhubClient.quote(key, (error, data, response) => {
 				var priceChange = parseFloat(data.d.toFixed(2))
 				var price = parseFloat(data.c.toFixed(2))
-				var total = parseFloat(data.c*stocks[key].toFixed(2))
+				var total = parseFloat((price*stocks[key]).toFixed(2))
 				thing += total
 				setPrices((prevState) => ({
 					...prevState,
@@ -101,9 +101,9 @@ function Portfolio({navigation}){
 						<TouchableHighlight onPress={() => stockOnClick([item])} underlayColor="white" style={{paddingBottom: 10}}> 
 							<View style={styles.container}>
 								<Text style = {[styles.item, {fontWeight: "bold", fontSize: 16}]}>{item} </Text>
-								<Text style = {styles.item}>{prices[item]}</Text>
+								<Text style = {styles.item}>${prices[item]}</Text>
 								<Text style = {styles.item}>{stocks[item]} </Text>
-								<Text style = {styles.totalValue}>{total[item]}</Text>
+								<Text style = {styles.totalValue}>${total[item]}</Text>
 							</View>
 						</TouchableHighlight>
 					</react.Fragment>
